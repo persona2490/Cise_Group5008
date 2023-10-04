@@ -1,46 +1,49 @@
 "use client";
 import React, { useState } from "react";
-import axios, { AxiosError } from "axios";
-import Navbar from './components/navbar';
-import AppBar from './components/AppBar';
+import { CiSearch } from 'react-icons/ci';
+
+import AppBar from "./components/AppBar";
 const HomePage: React.FC = () => {
-  const [name, setName] = useState("swang2077@gmail.com"); // 用'name'替换了'email'
-  const [userId, setUserId] = useState(null);
-
-  const handleSubmit = async () => {
-    try {
-      const response = await axios.post("http://localhost:5000/api/findUser", {
-        Name: name,
-      });
-
-      if (response.data.id) {
-        setUserId(response.data.id); // Set the ID to state
-      } else {
-        alert("User not found!");
-      }
-    } catch (error) {
-      const axiosError = error as AxiosError;
-
-      if (axiosError.response && axiosError.response.status === 404) {
-        alert("Can not find result");
-      } else {
-        alert("intnet error!");
-      }
-      console.error("There was a problem:", error);
-    }
-  };
 
   return (
+    
     <div>
-    <AppBar />
+      <AppBar />
 
       <div className="container mx-auto px-4">
-        <h1>Hello word</h1>
-        <p>This is a content to make our page longer</p>
-        <div className="w-full h-screen bg-green-300"></div>
-        <p>Lorem Ipsum is simply dummy text ...</p>
-      </div>
-   </div>
+  <h1>Explore the world’s knowledge, cultures, and ideas</h1>
+  <div className="search-bar">
+    <input type="text" placeholder="Search..." />
+    <span className="search-icon"><CiSearch/></span>
+  </div>
+  <style jsx>{`
+    h1 {
+      font-family: "Times New Roman", Times, serif;
+    }
+    .search-bar {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      border: 1px solid #ccc;
+      padding: 8px;
+    }
+    .search-bar input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-size: 16px;
+    }
+    .search-icon {
+      margin-left: 8px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+  `}</style>
+</div>
+
+
+
+    </div>
   );
 };
 
