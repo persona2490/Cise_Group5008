@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { CiSearch } from 'react-icons/ci';
 
-
 import AppBar from "./components/AppBar";
 const HomePage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -11,12 +10,27 @@ const HomePage: React.FC = () => {
   const handleSearch = async () => {
     try {
       const response = await fetch('http://localhost:5000/api/query', {
-        method: 'GET', // 使用 GET 请求触发查询操作
+        method: 'GET',
       });
-
+  
       if (response.ok) {
         const data = await response.json();
-        setSearchResult(`User ID: ${data.id}`);
+        if (data) {
+          let resultText = 'Search Result:\n';
+          // 遍历需要的属性并将它们添加到结果文本中
+          const properties = ['authors', 'DOI', 'Journal name', 'Pages', 'Title', 'Volume', 'Year of publication'];
+          console.log('Properties array:', properties);
+
+          resultText += JSON.stringify(data, null, 2);
+          
+          console.log(properties);
+          console.log(data);
+          console.log(resultText);
+
+          setSearchResult(resultText);
+        } else {
+          setSearchResult('No data found');
+        }
       } else {
         setSearchResult('User not found');
       }
@@ -32,7 +46,7 @@ const HomePage: React.FC = () => {
         <h1>Explore the world’s knowledge, cultures, and ideas</h1>
         <div className="search-bar">
           <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
-          <span className="search-icon" onClick={handleSearch}><CiSearch/></span> {}
+          <span className="search-icon" onClick={handleSearch}><CiSearch/></span> {/* 添加点击事件 */}
         </div>
         <p>{searchResult}</p>
       </div>
