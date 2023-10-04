@@ -2,8 +2,7 @@
 import React, { useState } from "react";
 import { CiSearch } from 'react-icons/ci';
 
-
-import AppBar from "./components/AppBar";
+import AppBar from "./components/navigation/AppBar";
 const HomePage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResult, setSearchResult] = useState('');
@@ -24,21 +23,30 @@ const HomePage: React.FC = () => {
       console.error('There was an error:', error);
     }
   };
-
   return (
     <div>
       <AppBar />
-      <div className="container mx-auto px-4">
-        <h1>Explore the world’s knowledge, cultures, and ideas</h1>
-        <div className="search-bar">
-          <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}/>
-          <span className="search-icon" onClick={handleSearch}><CiSearch/></span> {}
-        </div>
-        <p>{searchResult}</p>
+      <br></br>
+      <br></br>
+
+      <h1>Explore the world’s knowledge, cultures, and ideas</h1>
+      <div className="search-bar">
+        <input type="text" placeholder="Search journals. books, images, and primary sources" />
+        <span className="search-icon">
+          <CiSearch />
+        </span>
       </div>
       <style jsx>{`
+        .container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100vh; 
+        }
         h1 {
           font-family: "Times New Roman", Times, serif;
+          text-align: center; 
         }
         .search-bar {
           margin-top: 20px;
