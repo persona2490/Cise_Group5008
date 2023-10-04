@@ -1,11 +1,11 @@
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
 
 const AppBar = () => {
   return (
     <div className="app-bar">
       <div className="left">
-        {/* 左侧图标 */}
+        {/* left icon */}
         <img src="/path/to/icon.png" alt="Icon" />
       </div>
       <div className="right">
@@ -16,10 +16,10 @@ const AppBar = () => {
           <Link href="/page1" passHref>
             <p>Workspace</p>
           </Link>
-          <Link href="/page2" passHref>
+          <Link href="/" passHref>
             <p>Search</p>
           </Link>
-          <Link href="/page3" passHref>
+          <Link href="/components/submission">
             <p>Submit</p>
           </Link>
           <Link href="/page3" passHref>
@@ -44,7 +44,6 @@ const AppBar = () => {
         }
         .right {
           display: flex;
-          
         }
         .button {
           margin-right: 16px;
@@ -58,7 +57,6 @@ const AppBar = () => {
         }
         .right .links {
           display: flex;
-          
         }
         .right .links p {
           margin-left: 16px;
