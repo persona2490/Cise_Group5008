@@ -8,7 +8,7 @@ const HomePage: React.FC = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/api/findUser', { Name: name }); // 注意这里发送请求的键是'Name'
+      const response = await axios.post('http://localhost:5000/api/findUser', { Name: name }); 
 
       if (response.data.id) {
         setUserId(response.data.id);  // Set the ID to state
@@ -16,12 +16,12 @@ const HomePage: React.FC = () => {
         alert('User not found!');
       }
     } catch (error) {
-      const axiosError = error as AxiosError; // 类型断言
+      const axiosError = error as AxiosError;
 
     if (axiosError.response && axiosError.response.status === 404) {
-        alert('查找失败！');
+        alert('Can not find result');
     } else {
-        alert('网络有问题！');
+        alert('intnet error!');
     }
     console.error('There was a problem:', error);
     }
@@ -32,7 +32,7 @@ const HomePage: React.FC = () => {
       <input
         type="text"
         value={name}
-        onChange={(e) => setName(e.target.value)} // 这里是'setName'
+        onChange={(e) => setName(e.target.value)}
       />
       <button onClick={handleSubmit}>Find User ID</button>
       {userId && <div>User ID: {userId}</div>}
