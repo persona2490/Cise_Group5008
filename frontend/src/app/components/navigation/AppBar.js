@@ -6,7 +6,7 @@ const AppBar = () => {
     <div className="app-bar">
       <div className="left">
         {/* left icon */}
-        <img src="/path/to/icon.png" alt="Icon" />
+        <img src="/Assets/icon.jpg" alt="Icon" />
       </div>
       <div className="right">
         <div className="button">
@@ -39,26 +39,31 @@ const AppBar = () => {
           border: 1px solid #ccc;
         }
         .left img {
-          width: 24px;
-          height: 24px;
+          width: 85px;
+          height: 85px;
         }
         .right {
           display: flex;
+          flex-direction: column; 
+          align-items: flex-end;; 
         }
         .button {
-          margin-right: 16px;
+          margin-top: -5px; 
+          margin-right: 0px;
+
         }
         .button button {
-          background-color: #4caf50;
+          background-color: #910002;
           color: white;
-          border: none;
-          padding: 10px 20px;
+          border: 1px solid #ccc;
+          padding: 5px 5px;
           cursor: pointer;
         }
         .right .links {
           display: flex;
+          margin-top: 20px; 
         }
-        .right .links p {
+        .links p {
           margin-left: 16px;
           color: black;
           text-decoration: none;
