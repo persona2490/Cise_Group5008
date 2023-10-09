@@ -10,7 +10,7 @@ const HomePage: React.FC = () => {
   const handleSearch = async () => {
     try {
       const response = await fetch('http://localhost:5000/api/query', {
-        method: 'GET', // 使用 GET 请求触发查询操作
+        method: 'GET', 
       });
 
       if (response.ok) {
