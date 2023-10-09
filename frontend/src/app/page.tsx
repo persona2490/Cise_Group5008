@@ -1,9 +1,8 @@
 "use client"
 import React, { useState } from "react";
 import { CiSearch } from 'react-icons/ci';
-import AppBar from "./components/AppBar";
 import Search from '../../components/Search';  
-
+import AppBar from "./components/navigation/AppBar";
 const HomePage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResult, setSearchResult] = useState<string[]>([]);
@@ -23,7 +22,6 @@ const HomePage: React.FC = () => {
       const result = await Search(searchQuery);
       setSearchResult(result);
   };
-
   return (
       <div>
           <AppBar />
