@@ -12,7 +12,7 @@ const fetchData = async (query: string): Promise<string[]> => {
 
         if (Array.isArray(data)) {
             data.forEach(item => {
-                const properties = ['Authors', 'DOI', 'Journal name', 'Pages', 'Title', 'Volume', 'Year of publication'];
+                const properties = ['Authors', 'DOI', 'Journal', 'Pages', 'Title', 'Volume', 'Year'];
                 properties.forEach((property) => {
                     if (item.hasOwnProperty(property)) {
                         resultArray.push(`${property}: ${Array.isArray(item[property]) ? item[property].join(', ') : item[property]}`);

@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const searchRoutes = require('./Search.tsx');
+const Routes = require('./Routes.tsx');
 
 const app = express();
 
@@ -16,7 +16,7 @@ mongoose.connect('mongodb+srv://Duhang:xjd7604@cise.jgh9sxb.mongodb.net/?retryWr
   .then(() => {
     console.log('Connected to MongoDB');
 
-    app.use('/api', searchRoutes);
+    app.use('/api', Routes);
     app.listen(port, () => {
       console.log(`Server is running on http://localhost:${port}`);
     });

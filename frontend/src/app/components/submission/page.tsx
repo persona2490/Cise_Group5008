@@ -2,40 +2,50 @@
 import React, { useRef } from "react";
 import AppBar from "../navigation/AppBar";
 import classes from "./submission.module.css";
+import sendDataToServer from './sendData';
+
 function Submission() {
   const titleInputRef = useRef<HTMLInputElement>(null);
   const authorsInputRef = useRef<HTMLInputElement>(null);
   const journalNameInputRef = useRef<HTMLInputElement>(null);
   const yearInputRef = useRef<HTMLInputElement>(null);
   const volumeInputRef = useRef<HTMLInputElement>(null);
-  const numberInputRef = useRef<HTMLInputElement>(null);
   const pagesInputRef = useRef<HTMLInputElement>(null);
   const doiInputRef = useRef<HTMLInputElement>(null);
 
-  function submitHandler(event: React.FormEvent) {
+  async function submitHandler(event: React.FormEvent) {
     event.preventDefault();
-
+  
     const title = titleInputRef.current?.value;
     const authors = authorsInputRef.current?.value;
-    const journalName = journalNameInputRef.current?.value;
-    const year = yearInputRef.current?.value;
+    const journal = journalNameInputRef.current?.value;
+    const year = Number(yearInputRef.current?.value); 
     const volume = volumeInputRef.current?.value;
-    const number = numberInputRef.current?.value;
     const pages = pagesInputRef.current?.value;
     const doi = doiInputRef.current?.value;
-
+  
     const submitData = {
       Title: title,
       Authors: authors,
-      JournalName: journalName,
+      Journal: journal, 
       Year: year,
       Volume: volume,
-      Number: number,
       Pages: pages,
       DOI: doi,
     };
-
-    console.log(submitData);
+  
+    //console.log(submitData);
+  
+    try {
+      const result = await sendDataToServer(submitData);
+      if (result.status == 'success') {
+          alert(result.message);
+      } else {
+          console.error('Error sending data:', result.message);
+      }
+  } catch (error) {
+      console.error('Network or other error:', error);
+  }
   }
   return (
     <div>
@@ -86,10 +96,7 @@ function Submission() {
             <label htmlFor="volume">Volume:</label>
             <input type="text" id="volume" name="volume" ref={volumeInputRef} />
           </div>
-          <div className={classes.control}>
-            <label htmlFor="number">Number:</label>
-            <input type="text" id="number" name="number" ref={numberInputRef} />
-          </div>
+
           <div className={classes.control}>
             <label htmlFor="pages">Pages:</label>
             <input type="text" id="pages" name="pages" ref={pagesInputRef} />
