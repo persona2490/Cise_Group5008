@@ -1,52 +1,107 @@
 "use client";
 import React, { useState } from "react";
-import { CiSearch } from 'react-icons/ci';
-
+import { CiSearch } from "react-icons/ci";
+import Search from "../../components/Search";
 import AppBar from "./components/navigation/AppBar";
+
+
+type SearchResult = { [key: string]: string };
+
 const HomePage: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResult, setSearchResult] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResult, setSearchResult] = useState<SearchResult[]>([]);
 
-  const handleSearch = async () => {
-    try {
-      const response = await fetch('http://localhost:5000/api/query', {
-        method: 'GET', // 使用 GET 请求触发查询操作
-      });
+  const handleIconClick = async () => {
+    console.log("Input changed:", searchQuery);
+    if (searchQuery.trim() === "") {
 
-      if (response.ok) {
-        const data = await response.json();
-        setSearchResult(`User ID: ${data.id}`);
-      } else {
-        setSearchResult('User not found');
-      }
-    } catch (error) {
-      console.error('There was an error:', error);
+      setSearchResult([{ Message: "please input a keyword" }]);
+    } else if (/^\d+$/.test(searchQuery.trim())) {
+      setSearchResult([{ Message: "Please enter a non-numeric keyword" }]);
+    } else {
+      handleSearch();
     }
   };
+
+  const handleSearch = async () => {
+
+    const resultsArray = await Search(searchQuery);
+
+    let tempArray: string[] = [];
+    const resultsObjects: SearchResult[] = [];
+
+    resultsArray.forEach((item) => {
+        if (item !== '') {
+            tempArray.push(item);
+        } else if (tempArray.length > 0) {
+            const obj = tempArray.reduce<SearchResult>((acc, line) => {
+                const [key, value] = line.split(":");
+                if (key && value !== undefined) {
+                    acc[key.trim()] = value.trim();
+                }
+                return acc;
+            }, {});
+            resultsObjects.push(obj);
+            tempArray = [];
+        }
+    });
+
+    // Handle any remaining items
+    if (tempArray.length > 0) {
+        const obj = tempArray.reduce<SearchResult>((acc, line) => {
+            const [key, value] = line.split(":");
+            if (key && value !== undefined) {
+                acc[key.trim()] = value.trim();
+            }
+            return acc;
+        }, {});
+        resultsObjects.push(obj);
+    }
+
+    setSearchResult(resultsObjects);
+  };
+
   return (
     <div>
       <AppBar />
-      <br></br>
-      <br></br>
-
       <h1>Explore the world’s knowledge, cultures, and ideas</h1>
       <div className="search-bar">
-        <input type="text" placeholder="Search journals. books, images, and primary sources" />
-        <span className="search-icon">
+        <input
+          type="text"
+          placeholder="Search journals. books, images, and primary sources"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <span className="search-icon" onClick={handleIconClick}>
           <CiSearch />
         </span>
       </div>
+
+      <div className="search-results">
+        <table>
+          <tbody>
+            {searchResult.length > 0 && (
+              <tr>
+                {Object.keys(searchResult[0]).map((key, index) => (
+                  <th key={index}>{key}</th>
+                ))}
+              </tr>
+            )}
+            {searchResult.map((result, rowIndex) => (
+              <tr key={rowIndex}>
+                {Object.values(result).map((value, colIndex) => (
+                  <td key={colIndex}>{value}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
       <style jsx>{`
-        .container {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          height: 100vh; 
-        }
         h1 {
           font-family: "Times New Roman", Times, serif;
-          text-align: center; 
+          text-align: center;
         }
         .search-bar {
           margin-top: 20px;
@@ -65,6 +120,17 @@ const HomePage: React.FC = () => {
           margin-left: 8px;
           font-size: 24px;
           cursor: pointer;
+        }
+        table {
+          border-collapse: collapse;
+          width: 100%;
+          border: 1px solid #ccc;
+        }
+        th,
+        td {
+          border: 1px solid #ccc;
+          padding: 8px;
+          text-align: left;
         }
       `}</style>
     </div>
