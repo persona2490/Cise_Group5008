@@ -4,34 +4,63 @@ import { CiSearch } from "react-icons/ci";
 import Search from "../../components/Search";
 import AppBar from "./components/navigation/AppBar";
 
+type SearchResult = { [key: string]: string };
+
 const HomePage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResult, setSearchResult] = useState<string[]>([]);
+  const [searchResult, setSearchResult] = useState<SearchResult[]>([]);
 
   const handleIconClick = async () => {
     console.log("Input changed:", searchQuery);
     if (searchQuery.trim() === "") {
-      setSearchResult(["please input a keyword"]);
+      setSearchResult([{ Message: "please input a keyword" }]);
     } else if (/^\d+$/.test(searchQuery.trim())) {
-      setSearchResult(["Please enter a non-numeric keyword"]);
+      setSearchResult([{ Message: "Please enter a non-numeric keyword" }]);
     } else {
       handleSearch();
     }
   };
 
   const handleSearch = async () => {
-    const result = await Search(searchQuery);
-    console.log(result);
-    setSearchResult(result);
+    const resultsArray = await Search(searchQuery);
+
+    let tempArray: string[] = [];
+    const resultsObjects: SearchResult[] = [];
+
+    resultsArray.forEach((item) => {
+        if (item !== '') {
+            tempArray.push(item);
+        } else if (tempArray.length > 0) {
+            const obj = tempArray.reduce<SearchResult>((acc, line) => {
+                const [key, value] = line.split(":");
+                if (key && value !== undefined) {
+                    acc[key.trim()] = value.trim();
+                }
+                return acc;
+            }, {});
+            resultsObjects.push(obj);
+            tempArray = [];
+        }
+    });
+
+    // Handle any remaining items
+    if (tempArray.length > 0) {
+        const obj = tempArray.reduce<SearchResult>((acc, line) => {
+            const [key, value] = line.split(":");
+            if (key && value !== undefined) {
+                acc[key.trim()] = value.trim();
+            }
+            return acc;
+        }, {});
+        resultsObjects.push(obj);
+    }
+
+    setSearchResult(resultsObjects);
   };
 
   return (
     <div>
       <AppBar />
-      <br></br>
-
-      <br></br>
-
       <h1>Explore the world’s knowledge, cultures, and ideas</h1>
       <div className="search-bar">
         <input
@@ -44,47 +73,29 @@ const HomePage: React.FC = () => {
           <CiSearch />
         </span>
       </div>
-      <br></br>
-      {/* <div className="search-results">
-        <table>
-          <tbody>
-            {searchResult.map((line, index) => (
-              <tr key={index}>
-                <td>{line}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-    //   </div> */}
 
       <div className="search-results">
         <table>
           <tbody>
-            {searchResult.map((line, index) => {
-              const [label, value] = line.split(":").map((item) => item.trim());
-              if (label !== " ") {
-                return (
-                  <tr key={index}>
-                    <th>{label}</th>
-                    <td>{value}</td>
-                  </tr>
-                );
-              } else {
-                return null;
-              }
-            })}
+            {searchResult.length > 0 && (
+              <tr>
+                {Object.keys(searchResult[0]).map((key, index) => (
+                  <th key={index}>{key}</th>
+                ))}
+              </tr>
+            )}
+            {searchResult.map((result, rowIndex) => (
+              <tr key={rowIndex}>
+                {Object.values(result).map((value, colIndex) => (
+                  <td key={colIndex}>{value}</td>
+                ))}
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
 
       <style jsx>{`
-        .container {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          height: 100vh;
-        }
         h1 {
           font-family: "Times New Roman", Times, serif;
           text-align: center;
@@ -112,7 +123,6 @@ const HomePage: React.FC = () => {
           width: 100%;
           border: 1px solid #ccc;
         }
-
         th,
         td {
           border: 1px solid #ccc;
