@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 const AppBar = () => {
   return (
     <div className="app-bar">
@@ -13,9 +13,19 @@ const AppBar = () => {
           <button>Login</button>
         </div>
         <div className="links">
-          <Link href="/page1" passHref>
-            <p>Workspace</p>
-          </Link>
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger asChild><p>Workspace</p></DropdownMenu.Trigger>
+            <DropdownMenu.Content>
+            <Link href="/components/submission">
+                <DropdownMenu.Item> Moderator</DropdownMenu.Item>
+              </Link>
+
+              <Link href="/components/submission">
+              <DropdownMenu.Item> Analyst</DropdownMenu.Item>
+              </Link>
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
+
           <Link href="/" passHref>
             <p>Search</p>
           </Link>
@@ -44,13 +54,12 @@ const AppBar = () => {
         }
         .right {
           display: flex;
-          flex-direction: column; 
-          align-items: flex-end;; 
+          flex-direction: column;
+          align-items: flex-end;
         }
         .button {
-          margin-top: -5px; 
+          margin-top: -5px;
           margin-right: 0px;
-
         }
         .button button {
           background-color: #910002;
@@ -61,7 +70,7 @@ const AppBar = () => {
         }
         .right .links {
           display: flex;
-          margin-top: 20px; 
+          margin-top: 20px;
         }
         .links p {
           margin-left: 16px;
