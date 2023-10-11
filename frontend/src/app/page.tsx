@@ -4,6 +4,7 @@ import { CiSearch } from "react-icons/ci";
 import Search from "../../components/Search";
 import AppBar from "./components/navigation/AppBar";
 
+
 type SearchResult = { [key: string]: string };
 
 const HomePage: React.FC = () => {
@@ -13,6 +14,7 @@ const HomePage: React.FC = () => {
   const handleIconClick = async () => {
     console.log("Input changed:", searchQuery);
     if (searchQuery.trim() === "") {
+
       setSearchResult([{ Message: "please input a keyword" }]);
     } else if (/^\d+$/.test(searchQuery.trim())) {
       setSearchResult([{ Message: "Please enter a non-numeric keyword" }]);
@@ -22,6 +24,7 @@ const HomePage: React.FC = () => {
   };
 
   const handleSearch = async () => {
+
     const resultsArray = await Search(searchQuery);
 
     let tempArray: string[] = [];
