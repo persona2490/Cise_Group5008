@@ -12,10 +12,16 @@ const AppBar = () => {
         <div className="button">
           <button>Login</button>
         </div>
-        <div className="links">
-          <Link href="/page1" passHref>
-            <p>Workspace</p>
+        <p className="dropbtn">Workspace</p>
+        <div className="dropdown-content">
+          <Link href="/page1">
+            <a>Analyst</a>
           </Link>
+          <Link href="/page2">
+            <a>Moderator</a>
+          </Link>
+        </div>
+        <div className="links">
           <Link href="/" passHref>
             <p>Search</p>
           </Link>
@@ -44,13 +50,12 @@ const AppBar = () => {
         }
         .right {
           display: flex;
-          flex-direction: column; 
-          align-items: flex-end;; 
+          flex-direction: column;
+          align-items: flex-end;
         }
         .button {
-          margin-top: -5px; 
+          margin-top: -5px;
           margin-right: 0px;
-
         }
         .button button {
           background-color: #910002;
@@ -61,7 +66,7 @@ const AppBar = () => {
         }
         .right .links {
           display: flex;
-          margin-top: 20px; 
+          margin-top: 20px;
         }
         .links p {
           margin-left: 16px;
