@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Exploration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 32px;
+        }
+
+        .search-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tabs {
+            margin-bottom: 10px;
+        }
+
+        .tabs button {
+            background-color: #e0e0e0;
+            border: none;
+            padding: 10px 20px;
+            margin-right: 10px;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .tabs button.active {
+            background-color: #2196F3;
+            color: #fff;
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+
+        .search-btn {
+            padding: 10px 20px;
+            margin-left: 10px;
+            background-color: #2196F3;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div>Icon</div>
+        <div>
+            <button>Register</button>
+            <button>Log in</button>
+        </div>
+    </header>
+
+    <div class="search-container">
+        <h1>Explore the world’s knowledge, cultures, and ideas</h1>
+        <div class="tabs">
+            <button class="active">All Content</button>
+            <button>Images</button>
+        </div>
+        <div>
+            <input type="text" placeholder="Search journals, books, images, and primary sources">
+            <button class="search-btn">Advanced Search</button>
+        </div>
+    </div>
+</body>
+</html>
