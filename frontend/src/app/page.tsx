@@ -4,7 +4,6 @@ import { CiSearch } from "react-icons/ci";
 import Search from "../../components/Search";
 import AppBar from "./components/navigation/AppBar";
 
-
 type SearchResult = { [key: string]: string };
 
 const HomePage: React.FC = () => {
@@ -14,7 +13,6 @@ const HomePage: React.FC = () => {
   const handleIconClick = async () => {
     console.log("Input changed:", searchQuery);
     if (searchQuery.trim() === "") {
-
       setSearchResult([{ Message: "please input a keyword" }]);
     } else if (/^\d+$/.test(searchQuery.trim())) {
       setSearchResult([{ Message: "Please enter a non-numeric keyword" }]);
@@ -24,38 +22,37 @@ const HomePage: React.FC = () => {
   };
 
   const handleSearch = async () => {
-
     const resultsArray = await Search(searchQuery);
 
     let tempArray: string[] = [];
     const resultsObjects: SearchResult[] = [];
 
     resultsArray.forEach((item) => {
-        if (item !== '') {
-            tempArray.push(item);
-        } else if (tempArray.length > 0) {
-            const obj = tempArray.reduce<SearchResult>((acc, line) => {
-                const [key, value] = line.split(":");
-                if (key && value !== undefined) {
-                    acc[key.trim()] = value.trim();
-                }
-                return acc;
-            }, {});
-            resultsObjects.push(obj);
-            tempArray = [];
-        }
+      if (item !== "") {
+        tempArray.push(item);
+      } else if (tempArray.length > 0) {
+        const obj = tempArray.reduce<SearchResult>((acc, line) => {
+          const [key, value] = line.split(":");
+          if (key && value !== undefined) {
+            acc[key.trim()] = value.trim();
+          }
+          return acc;
+        }, {});
+        resultsObjects.push(obj);
+        tempArray = [];
+      }
     });
 
     // Handle any remaining items
     if (tempArray.length > 0) {
-        const obj = tempArray.reduce<SearchResult>((acc, line) => {
-            const [key, value] = line.split(":");
-            if (key && value !== undefined) {
-                acc[key.trim()] = value.trim();
-            }
-            return acc;
-        }, {});
-        resultsObjects.push(obj);
+      const obj = tempArray.reduce<SearchResult>((acc, line) => {
+        const [key, value] = line.split(":");
+        if (key && value !== undefined) {
+          acc[key.trim()] = value.trim();
+        }
+        return acc;
+      }, {});
+      resultsObjects.push(obj);
     }
 
     setSearchResult(resultsObjects);
@@ -76,7 +73,7 @@ const HomePage: React.FC = () => {
           <CiSearch />
         </span>
       </div>
-
+      <br></br>
       <div className="search-results">
         <table>
           <tbody>
