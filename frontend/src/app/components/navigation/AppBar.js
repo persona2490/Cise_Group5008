@@ -1,6 +1,8 @@
+// AppBar.tsx
 import React from "react";
 import Link from "next/link";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+
 const AppBar = () => {
   return (
     <div className="app-bar">
@@ -14,14 +16,16 @@ const AppBar = () => {
         </div>
         <div className="links">
           <DropdownMenu.Root>
-            <DropdownMenu.Trigger asChild><p>Workspace</p></DropdownMenu.Trigger>
+            <DropdownMenu.Trigger asChild>
+              <p>Workspace</p>
+            </DropdownMenu.Trigger>
             <DropdownMenu.Content>
-            <Link href="/components/submission">
-                <DropdownMenu.Item> Moderator</DropdownMenu.Item>
+              <Link href="/components/Moderator">
+                <DropdownMenu.Item>Moderator</DropdownMenu.Item>
               </Link>
 
-              <Link href="/components/submission">
-              <DropdownMenu.Item> Analyst</DropdownMenu.Item>
+              <Link href="/components/Analyst">
+                <DropdownMenu.Item>Analyst</DropdownMenu.Item>
               </Link>
             </DropdownMenu.Content>
           </DropdownMenu.Root>
@@ -32,7 +36,7 @@ const AppBar = () => {
           <Link href="/components/submission">
             <p>Submit</p>
           </Link>
-          <Link href="/page3" passHref>
+          <Link href="components/About" passHref>
             <p>About</p>
           </Link>
         </div>
