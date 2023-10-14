@@ -1,31 +1,19 @@
 // ArticleSearch.tsx
-import React, { useRef, useState } from "react";
-import classes from "./submission.module.css"; // Import the CSS styles
+import React, { useState } from "react";
+import classes from "./submission.module.css";
 
 function ArticleSearch() {
-  // Create a reference to the article title input and initialize state variables
-  const articleTitleInputRef = useRef<HTMLInputElement | null>(null);
   const [articleDetails, setArticleDetails] = useState<any>(null);
-  const [notFoundMessage, setNotFoundMessage] = useState<string | null>(null); // State for the not found message
+  const [notFoundMessage, setNotFoundMessage] = useState<string | null>(null);
 
-  // Function to search for an article
+  // Function to search for an article - you can replace this function if needed
   async function searchArticle(event: React.FormEvent) {
     event.preventDefault();
 
-    // Get the article title from the input field
-    const articleTitle = articleTitleInputRef.current?.value;
+    // Replace this with your actual logic to retrieve article details
 
-    if (!articleTitle) {
-      alert("Please enter the article title.");
-      return;
-    }
-
-    // Reset the notFoundMessage
-    setNotFoundMessage(null);
-
-    // fetch article details based on the title.
     const dummyArticleDetails = {
-      Title: articleTitle,
+      Title: "Article Title",
       Author: "Author Name",
       Journal: "Journal Name",
       Year: 2023,
@@ -45,31 +33,25 @@ function ArticleSearch() {
 
   return (
     <div className={classes.container}>
-      {/* Added a title for the page */}
       <h1 className={classes.title}>MODERATOR PAGE</h1>
 
-      <form onSubmit={searchArticle} className={classes.form}>
-        <div className={classes.center}>
-          <label htmlFor="articleTitle" className={classes.label}>
-            Article Title:
-          </label>
-          <input
-            type="text"
-            id="articleTitle"
-            name="articleTitle"
-            required
-            ref={articleTitleInputRef}
-            className={classes.input}
-          />
-        </div>
-        <div className={classes.center}>
-          <button type="submit" className={classes.button}>
-            Search
-          </button>
-        </div>
-      </form>
+      <div className={classes.tableRow}>
+        <p className={classes.articleText}>ARTICLE 1</p>
+        <button className={classes.detailButton}>DETAILS</button>
+        <button className={classes.acceptButton}>ACCEPT</button>
+        <button className={classes.declineButton}>DECLINE</button>
+      </div>
 
-      {/* Display a not found message if the article is not found */}
+      {/* Empty article sections */}
+      <div className={classes.emptyArticleSection}></div>
+      <div className={classes.emptyArticleSection}></div>
+      <div className={classes.emptyArticleSection}></div>
+      <div className={classes.emptyArticleSection}></div>
+      <div className={classes.emptyArticleSection}></div>
+      <div className={classes.emptyArticleSection}></div>
+      <div className={classes.emptyArticleSection}></div>
+      <div className={classes.emptyArticleSection}></div>
+
       {notFoundMessage && (
         <div className={classes.notFoundMessage}>{notFoundMessage}</div>
       )}

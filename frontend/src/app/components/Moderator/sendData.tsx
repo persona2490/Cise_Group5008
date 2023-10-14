@@ -25,8 +25,3 @@ const sendDataToServer = async (data: any) => {
 };
 
 export default sendDataToServer;
-
-
-
-
-

@@ -1,10 +1,23 @@
 /* submission.module.css */
+
+/* ... (other existing styles) ... */
+
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   height: 100vh;
+  margin-top: 20px;
+}
+
+.tableRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  padding: 8px;
+  margin: 4px 0; /* Add margin for spacing between rows */
 }
 
 .form {
@@ -20,7 +33,7 @@
   font-weight: bold;
   margin-bottom: 0.5rem;
   font-size: 1.2rem;
-  color: #333; /* Change to your preferred color */
+  color: #333;
 }
 
 .input {
@@ -36,8 +49,6 @@
 .button {
   font: inherit;
   cursor: pointer;
-  background-color: #007bff; /* Change to your preferred color */
-  color: white;
   padding: 0.5rem 1.5rem;
   border: none;
   border-radius: 4px;
@@ -47,5 +58,63 @@
 
 .button:hover,
 .button:active {
-  background-color: #0056b3; /* Change to your preferred color */
+  background-color: #0056b3;
+}
+
+/* Updated styles for the buttons */
+
+.detailButton {
+  font: inherit;
+  cursor: pointer;
+  background-color: #007bff; /* Blue */
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.detailButton:hover,
+.detailButton:active {
+  background-color: #0056b3; /* Darker blue on hover/active */
+}
+
+.acceptButton {
+  font: inherit;
+  cursor: pointer;
+  background-color: #4caf50; /* Green */
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.acceptButton:hover,
+.acceptButton:active {
+  background-color: #45a049; /* Darker green on hover/active */
+}
+
+.declineButton {
+  font: inherit;
+  cursor: pointer;
+  background-color: #f44336; /* Red */
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.declineButton:hover,
+.declineButton:active {
+  background-color: #d32f2f; /* Darker red on hover/active */
+}
+
+.articleText {
+  font-weight: bold;
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  margin-right: 8px; /* Add right margin for spacing */
 }
