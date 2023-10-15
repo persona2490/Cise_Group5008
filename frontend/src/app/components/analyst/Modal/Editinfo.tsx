@@ -29,7 +29,7 @@ function EditInfo(props: {
 
   return (
     <div>
-      <div className="Form">
+      {/* <div className="Form">
         <Box
           component="form"
           sx={{
@@ -136,7 +136,7 @@ function EditInfo(props: {
             </TextField>
           </div>
         </Box>
-      </div>
+      </div> */}
       <div className={styles.modal}>
         <p>Submit Sucessfully</p>
         <Link href="/" passHref>
