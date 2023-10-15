@@ -51,16 +51,17 @@ const AppBar = () => {
           border: 1px solid #ccc;
         }
         .left img {
-          width: 85px;
-          height: 85px;
+          width: 95px;
+          height: 95px;
         }
         .right {
+          margin-top: -20px;
+          margin-bottom: 0px;
           display: flex;
           flex-direction: column;
           align-items: flex-end;
         }
         .button {
-          margin-top: -5px;
           margin-right: 0px;
         }
         .button button {
@@ -72,7 +73,7 @@ const AppBar = () => {
         }
         .right .links {
           display: flex;
-          margin-top: 20px;
+          margin-top: 50px;
         }
         .links p {
           margin-left: 16px;
