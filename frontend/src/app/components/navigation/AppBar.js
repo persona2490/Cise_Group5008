@@ -14,9 +14,11 @@ const AppBar = () => {
         </div>
         <div className="links">
           <DropdownMenu.Root>
-            <DropdownMenu.Trigger asChild><p>Workspace</p></DropdownMenu.Trigger>
+            <DropdownMenu.Trigger asChild>
+              <a>Workspace</a>
+            </DropdownMenu.Trigger>
             <DropdownMenu.Content>
-            <Link href="/components/submission">
+              <Link href="/components/submission">
                 <DropdownMenu.Item> Moderator</DropdownMenu.Item>
               </Link>
 
@@ -26,14 +28,14 @@ const AppBar = () => {
             </DropdownMenu.Content>
           </DropdownMenu.Root>
 
-          <Link href="/" passHref>
-            <p>Search</p>
+          <Link legacyBehavior href="/" passHref>
+            <a>Search</a>
           </Link>
-          <Link href="/components/submission">
-            <p>Submit</p>
+          <Link legacyBehavior href="/components/submission">
+            <a>Submit</a>
           </Link>
-          <Link href="/page3" passHref>
-            <p>About</p>
+          <Link legacyBehavior href="/page3" passHref>
+            <a>About</a>
           </Link>
         </div>
       </div>
@@ -49,16 +51,17 @@ const AppBar = () => {
           border: 1px solid #ccc;
         }
         .left img {
-          width: 85px;
-          height: 85px;
+          width: 95px;
+          height: 95px;
         }
         .right {
+          margin-top: -20px;
+          margin-bottom: 0px;
           display: flex;
           flex-direction: column;
           align-items: flex-end;
         }
         .button {
-          margin-top: -5px;
           margin-right: 0px;
         }
         .button button {
@@ -70,14 +73,22 @@ const AppBar = () => {
         }
         .right .links {
           display: flex;
-          margin-top: 20px;
+          margin-top: 50px;
         }
         .links p {
           margin-left: 16px;
           color: black;
-          text-decoration: none;
+          text-decoration: none !important;
           cursor: pointer;
           margin-bottom: 0;
+        }
+        .links a {      
+            margin-left: 16px;
+            color: black;
+            text-decoration: none !important;
+            cursor: pointer;
+            margin-bottom: -20px;      
+            font-weight: bold;
         }
       `}</style>
     </div>
