@@ -22,12 +22,17 @@ const HomePage: React.FC = () => {
   };
 
   const handleSearch = async () => {
-    const resultsArray = await Search(searchQuery);
-
+    const results = await Search(searchQuery);
+  
+    if (typeof results === "string") {
+      setSearchResult([{ Message: results }]);
+      return;
+    }
+  
     let tempArray: string[] = [];
     const resultsObjects: SearchResult[] = [];
-
-    resultsArray.forEach((item) => {
+  
+    results.forEach((item) => {
       if (item !== "") {
         tempArray.push(item);
       } else if (tempArray.length > 0) {
@@ -42,8 +47,7 @@ const HomePage: React.FC = () => {
         tempArray = [];
       }
     });
-
-    // Handle any remaining items
+  
     if (tempArray.length > 0) {
       const obj = tempArray.reduce<SearchResult>((acc, line) => {
         const [key, value] = line.split(":");
@@ -54,7 +58,7 @@ const HomePage: React.FC = () => {
       }, {});
       resultsObjects.push(obj);
     }
-
+  
     setSearchResult(resultsObjects);
   };
 
@@ -75,25 +79,33 @@ const HomePage: React.FC = () => {
       </div>
       <br></br>
       <div className="search-results">
-        <table>
-          <tbody>
-            {searchResult.length > 0 && (
-              <tr>
-                {Object.keys(searchResult[0]).map((key, index) => (
-                  <th key={index}>{key}</th>
-                ))}
-              </tr>
-            )}
-            {searchResult.map((result, rowIndex) => (
-              <tr key={rowIndex}>
-                {Object.values(result).map((value, colIndex) => (
-                  <td key={colIndex}>{value}</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+  <table>
+    <tbody>
+      {searchResult.length > 0 && searchResult[0].hasOwnProperty("Message") ? (
+        <tr>
+          <td>{searchResult[0].Message}</td>
+        </tr>
+      ) : (
+        <>
+          {searchResult.length > 0 && (
+            <tr>
+              {Object.keys(searchResult[0]).map((key, index) => (
+                <th key={index}>{key}</th>
+              ))}
+            </tr>
+          )}
+          {searchResult.map((result, rowIndex) => (
+            <tr key={rowIndex}>
+              {Object.values(result).map((value, colIndex) => (
+                <td key={colIndex}>{value}</td>
+              ))}
+            </tr>
+          ))}
+        </>
+      )}
+    </tbody>
+  </table>
+</div>
 
       <style jsx>{`
         h1 {
