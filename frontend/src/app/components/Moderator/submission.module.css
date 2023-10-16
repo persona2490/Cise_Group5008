@@ -1,14 +1,13 @@
 /* submission.module.css */
 
-/* ... (other existing styles) ... */
-
 .container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start; /* Updated alignment to the left */
   justify-content: flex-start;
-  height: 100vh;
+  height: 50vh;
   margin-top: 20px;
+  margin-left: 300px; /* Adjust the margin-left value to move content to the right */
 }
 
 .tableRow {
@@ -26,6 +25,7 @@
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   text-align: center;
+  margin-right: 300px;
 }
 
 .label {
