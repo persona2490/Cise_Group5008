@@ -21,7 +21,8 @@ function EditInfo(props: {
     console.log("Journal Name:", journalName);
     console.log("Years:", years);
     console.log("Pages:", pages);
-
+    
+    // make the pop out disappear.
     if (props.onClick) {
       props.onClick(event);
     }
