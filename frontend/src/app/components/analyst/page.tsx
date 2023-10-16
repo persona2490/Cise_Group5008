@@ -18,8 +18,6 @@ function Analyst() {
     { field: "JN", headerName: "Journal Name", width: 130 },
     { field: "year", headerName: "Year", type: "number", width: 90 },
     { field: "page", headerName: "Pages", width: 90 },
-    { field: "isaccept", headerName: "IsAccept", width: 90, type: "boolean" },
-
     {
       field: "doi",
       headerName: "DOI",
@@ -29,6 +27,7 @@ function Analyst() {
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.firstName || ""} ${params.row.lastName || ""}`,
     },
+    { field: "isaccept", headerName: "IsAccept", width: 90, type: "boolean" },
     {
       field: "actions",
       headerName: "Acions",
