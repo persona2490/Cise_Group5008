@@ -53,7 +53,7 @@ function Analyst() {
               setIsModalOpen(true);
               console.log("Button clicked for row id:", params.id);
             }}
-          >DataGrid
+          >
             Edit
           </button>
         );
