@@ -1,30 +1,24 @@
-"use client";
+"use client"
 import React, { useEffect, useState } from "react";
 import AppBar from "../navigation/AppBar";
 import {
   DataGrid,
   GridColDef,
   GridRenderCellParams,
-  GridValueGetterParams,
 } from "@mui/x-data-grid";
-import Popout from "./Modal/Editinfo";
+import EditInfo from "./Modal/Editinfo";
 import axios from "axios";
 
 function Analyst() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [articles, setArticles] = useState<Article[]>([]);
+  const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
 
   useEffect(() => {
     axios.get('http://localhost:5000/api/published')
       .then(response => {
         const data = response.data;
         setArticles(data);
-  
-      data.forEach((article: Article) => {
-        console.log(`Title: ${article.Title}`);
-        console.log(`IsAccept: ${article.IsAccept}`);
-        console.log(`isPublished: ${article.isPublished}`);
-      });
       })
       .catch(error => {
         console.error("There was an error fetching the articles:", error);
@@ -32,9 +26,9 @@ function Analyst() {
   }, []);
 
   const columns: GridColDef[] = [
-    { field: "Title", headerName: "Title", width: 70 },
-    { field: "Authors", headerName: "Authors", width: 130 },
-    { field: "Journal", headerName: "Journal Name", width: 130 },
+    { field: "Title", headerName: "Title", width: 200 },
+    { field: "Authors", headerName: "Authors", width: 170 },
+    { field: "Journal", headerName: "Journal Name", width: 150 },
     { field: "Year", headerName: "Year", type: "number", width: 90 },
     { field: "Pages", headerName: "Pages", width: 90},
     { field: "isAccepted", headerName: "IsAccept", width: 90, type: "boolean" },
@@ -50,8 +44,9 @@ function Analyst() {
         return (
           <button
             onClick={() => {
+              const article: Article | null = articles.find(a => a._id === params.id) || null;
+              setSelectedArticle(article);
               setIsModalOpen(true);
-              console.log("Button clicked for row id:", params.id);
             }}
           >
             Edit
@@ -61,9 +56,9 @@ function Analyst() {
     },
   ];
 
-  // Control the pop out
   function closeModal() {
     setIsModalOpen(false);
+    setSelectedArticle(null);
   }
 
   return (
@@ -71,25 +66,17 @@ function Analyst() {
       <AppBar />
       <br />
       <div style={{ height: 400, width: "100%" }}>
-      <DataGrid
-        rows={articles}
-        columns={columns}
-        disableRowSelectionOnClick
-        getRowId={(row) => row._id}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
-          },
-        }}
-        pageSizeOptions={[5, 10]}
-      />
+        <DataGrid
+          rows={articles}
+          columns={columns}
+          disableRowSelectionOnClick
+          getRowId={(row) => row._id}
+        />
       </div>
-      {isModalOpen && <Popout onClick={closeModal} />}
+      {isModalOpen && <EditInfo onClick={closeModal} article={selectedArticle} />}
     </div>
   );
 }
-
-export default Analyst;
 
 interface Article {
   _id: string;
@@ -98,7 +85,10 @@ interface Article {
   Journal: string;
   Year: number;
   Pages: string;
-  IsAccept: boolean;
+  IsAccepted: boolean;
   isPublished: boolean;
   DOI: string;
 }
+
+export default Analyst;
+
