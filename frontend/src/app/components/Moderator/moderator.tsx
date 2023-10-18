@@ -1,11 +1,9 @@
-"use client";
 import React, { useEffect, useState } from "react";
-import AppBar from "../navigation/AppBar";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import EditInfo from "./Modal/Editinfo";
+import styles from "./moderator.module.css";
 import axios from "axios";
-import styles from "./Modal/Popout.module.css";
-function Analyst() {
+
+function Moderatorpage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [articles, setArticles] = useState<Article[]>([]);
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
@@ -26,21 +24,21 @@ function Analyst() {
     {
       field: "Title",
       headerName: "Title",
-      width: 220,
+      width: 200,
       align: "center",
       headerAlign: "center",
     },
     {
       field: "Authors",
       headerName: "Authors",
-      width: 200,
+      width: 170,
       align: "center",
       headerAlign: "center",
     },
     {
       field: "Journal",
       headerName: "Journal Name",
-      width: 200,
+      width: 150,
       align: "center",
       headerAlign: "center",
     },
@@ -78,38 +76,70 @@ function Analyst() {
     {
       field: "DOI",
       headerName: "DOI",
-      width: 130,
+      width: 70,
       sortable: false,
       align: "center",
       headerAlign: "center",
     },
     {
-      field: "actions",
+      field: "accept",
       headerName: "Acions",
+      headerAlign: "center",
       width: 120,
       sortable: false,
       filterable: false,
       align: "center",
-      headerAlign: "center",
       renderCell: (params: GridRenderCellParams) => {
         return (
-          <div className={styles.edit}>
-          <button
-            onClick={() => {
-              const article: Article | null =
-                articles.find((a) => a._id === params.id) || null;
-              setSelectedArticle(article);
-              setIsModalOpen(true);
-            }}
-          >
-            Edit
-          </button>
+          <div className={styles.accept}>
+            <button
+              onClick={() => {
+                const article: Article | null =
+                  articles.find((a) => a._id === params.id) || null;
+                setSelectedArticle(article);
+                acceptArticle();
+              }}
+            >
+              Accept
+            </button>
+          </div>
+        );
+      },
+    },
+    {
+      field: "reject",
+      headerName: "Reject",
+      headerAlign: "center",
+      width: 120,
+      sortable: false,
+      filterable: false,
+      align: "center",
+      renderCell: (params: GridRenderCellParams) => {
+        return (
+          <div className={styles.reject}>
+            <button
+              onClick={() => {
+                const article: Article | null =
+                  articles.find((a) => a._id === params.id) || null;
+                setSelectedArticle(article);
+                rejectArticle();
+              }}
+            >
+              Reject
+            </button>
           </div>
         );
       },
     },
   ];
-
+  function acceptArticle() {
+    console.log("accept");
+    window.location.reload();
+  }
+  function rejectArticle() {
+    console.log("reject");
+    window.location.reload();
+  }
   function closeModal() {
     setIsModalOpen(false);
     setSelectedArticle(null);
@@ -117,21 +147,16 @@ function Analyst() {
 
   return (
     <div>
-      <AppBar />
       <br />
       <div style={{ height: 400, width: "100%" }}>
         <DataGrid
           rows={articles}
           columns={columns}
           disableRowSelectionOnClick
-          pageSizeOptions={[3, 10]}
           getRowId={(row) => row._id}
-          
         />
       </div>
-      {isModalOpen && (
-        <EditInfo onClick={closeModal} article={selectedArticle} />
-      )}
+      {/* {isModalOpen && <EditInfo onClick={closeModal} article={selectedArticle} />} */}
     </div>
   );
 }
@@ -148,4 +173,4 @@ interface Article {
   DOI: string;
 }
 
-export default Analyst;
+export default Moderatorpage;
