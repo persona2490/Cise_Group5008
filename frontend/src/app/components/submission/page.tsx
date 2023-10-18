@@ -1,8 +1,10 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import AppBar from "../navigation/AppBar";
 import classes from "./submission.module.css";
-import sendDataToServer from './sendData';
+import sendDataToServer from "./sendData";
+import Popout from "./Modal/Pop out";
+import Backdrop from "./Modal/Backdrop";
 
 function Submission() {
   const titleInputRef = useRef<HTMLInputElement>(null);
@@ -13,40 +15,47 @@ function Submission() {
   const pagesInputRef = useRef<HTMLInputElement>(null);
   const doiInputRef = useRef<HTMLInputElement>(null);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   async function submitHandler(event: React.FormEvent) {
     event.preventDefault();
-  
+
     const title = titleInputRef.current?.value;
     const authors = authorsInputRef.current?.value;
     const journal = journalNameInputRef.current?.value;
-    const year = Number(yearInputRef.current?.value); 
+    const year = Number(yearInputRef.current?.value);
     const volume = volumeInputRef.current?.value;
     const pages = pagesInputRef.current?.value;
     const doi = doiInputRef.current?.value;
-  
+
     const submitData = {
       Title: title,
       Authors: authors,
-      Journal: journal, 
+      Journal: journal,
       Year: year,
       Volume: volume,
       Pages: pages,
       DOI: doi,
     };
-  
+
     //console.log(submitData);
-  
+
     try {
       const result = await sendDataToServer(submitData);
-      if (result.status == 'success') {
-          alert(result.message);
+      if (result.status == "success") {
+        setIsModalOpen(true);
+        window.location.reload(); 
       } else {
-          console.error('Error sending data:', result.message);
+        console.error("Error sending data:", result.message);
       }
-  } catch (error) {
-      console.error('Network or other error:', error);
+    } catch (error) {
+      console.error("Network or other error:", error);
+    }
   }
+  function closeModal() {
+    setIsModalOpen(false);
   }
+
   return (
     <div>
       <AppBar />
@@ -110,6 +119,8 @@ function Submission() {
           </div>
         </form>
       </div>
+      {isModalOpen && <Backdrop onClick={closeModal} />}
+      {isModalOpen && <Popout onClick={closeModal} />}
     </div>
   );
 }

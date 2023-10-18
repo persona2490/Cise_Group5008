@@ -1,16 +1,16 @@
-const fetchData = async (query: string): Promise<string[]> => {
+const fetchData = async (query: string): Promise<string[] | string> => {
     try {
         const response = await fetch(`http://localhost:5000/api/query?search=${query}`, {
             method: 'GET',
         });
         const data = await response.json();
-        const resultArray: string[] = [];
 
         if (data.message) {
-            return [data.message];
+            return data.message;
         }
 
         if (Array.isArray(data)) {
+            const resultArray: string[] = [];
             data.forEach(item => {
                 const properties = ['Authors', 'DOI', 'Journal', 'Pages', 'Title', 'Volume', 'Year'];
                 properties.forEach((property) => {
@@ -22,11 +22,11 @@ const fetchData = async (query: string): Promise<string[]> => {
             });
             return resultArray;
         } else {
-            return ['No data found'];
+            return 'No data found';
         }
     } catch (error) {
         console.error('There was an error:', error);
-        return ['Error fetching data'];
+        return 'Error fetching data';
     }
 };
 

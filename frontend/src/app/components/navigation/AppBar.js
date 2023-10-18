@@ -1,5 +1,7 @@
+// AppBar.tsx
 import React from "react";
 import Link from "next/link";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 
 const AppBar = () => {
   return (
@@ -13,17 +15,32 @@ const AppBar = () => {
           <button>Login</button>
         </div>
         <div className="links">
-          <Link href="/page1" passHref>
-            <p>Workspace</p>
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger asChild>
+              <a>Workspace</a>
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Content>
+            <Link href="/components/Moderator" passHref>
+                <DropdownMenu.Item> Moderator</DropdownMenu.Item>
+              </Link>
+
+              <Link href="/components/analyst" passHref>
+              <DropdownMenu.Item> Analyst</DropdownMenu.Item>
+              </Link>
+              <Link href="/components/admin" passHref>
+              <DropdownMenu.Item> Admin</DropdownMenu.Item>
+              </Link>
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
+
+          <Link legacyBehavior href="/" passHref>
+            <a>Search</a>
           </Link>
-          <Link href="/" passHref>
-            <p>Search</p>
+          <Link legacyBehavior href="/components/submission">
+            <a>Submit</a>
           </Link>
-          <Link href="/components/submission">
-            <p>Submit</p>
-          </Link>
-          <Link href="/page3" passHref>
-            <p>About</p>
+          <Link legacyBehavior href="/page3" passHref>
+            <a>About</a>
           </Link>
         </div>
       </div>
@@ -39,18 +56,18 @@ const AppBar = () => {
           border: 1px solid #ccc;
         }
         .left img {
-          width: 85px;
-          height: 85px;
+          width: 95px;
+          height: 95px;
         }
         .right {
+          margin-top: -20px;
+          margin-bottom: 0px;
           display: flex;
-          flex-direction: column; 
-          align-items: flex-end;; 
+          flex-direction: column;
+          align-items: flex-end;
         }
         .button {
-          margin-top: -5px; 
           margin-right: 0px;
-
         }
         .button button {
           background-color: #910002;
@@ -61,14 +78,22 @@ const AppBar = () => {
         }
         .right .links {
           display: flex;
-          margin-top: 20px; 
+          margin-top: 50px;
         }
         .links p {
           margin-left: 16px;
           color: black;
-          text-decoration: none;
+          text-decoration: none !important;
           cursor: pointer;
           margin-bottom: 0;
+        }
+        .links a {      
+            margin-left: 16px;
+            color: black;
+            text-decoration: none !important;
+            cursor: pointer;
+            margin-bottom: -20px;      
+            font-weight: bold;
         }
       `}</style>
     </div>
