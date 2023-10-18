@@ -150,5 +150,59 @@ router.patch('/update_article/:id', async (req, res) => {
     }
 });
 
+router.get('/articles', async (req, res) => {
+    try {
+
+      //console.log("检索所有文章");
+      const articles = await Article.find({});
+      res.json(articles);
+    } catch (error) {
+      console.error('Error retrieving articles:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+router.patch('/toggle-article-status/:id', async (req, res) => {
+    try {
+      const articleId = req.params.id;
+      const article = await Article.findById(articleId);
+  
+      if (!article) {
+        return res.status(404).json({ message: 'Article not found' });
+      }
+  
+      const propertyName = req.query.property;
+  
+      if (propertyName === 'isPublished') {
+        article.isPublished = !article.isPublished;
+      } else if (propertyName === 'isAccepted') {
+        article.isAccepted = !article.isAccepted;
+      } else if (propertyName === 'isChecked') {
+        article.isChecked = !article.isChecked;
+      } else {
+        return res.status(400).json({ message: 'Invalid property name' });
+      }
+  
+      await article.save();
+  
+      res.json({ message: 'Article status updated successfully' });
+    } catch (error) {
+      console.error('Error toggling article status:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+  router.delete('/deleteResource/:id', async (req, res) => {
+    try {
+      const resourceId = req.params.id;
+      console.log('Received request to delete resource with ID:', resourceId);
+      const result = await Article.findByIdAndDelete(resourceId);
+
+      res.status(200).json({ message: 'Resource deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting resource:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
 
 module.exports = router;

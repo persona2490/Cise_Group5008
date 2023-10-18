@@ -9,11 +9,12 @@ function Adminpage() {
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
 
   useEffect(() => {
+    // 在组件加载时从后端获取所有文章数据
     axios
-      .get("http://localhost:5000/api/query_unpublished")
+      .get("http://localhost:5000/api/articles")
       .then((response) => {
         const data = response.data;
-        setArticles(data);
+        setArticles(data); // 存储文章数据到状态
       })
       .catch((error) => {
         console.error("There was an error fetching the articles:", error);
@@ -116,7 +117,7 @@ function Adminpage() {
             <div className={styles.modal}>
                 <button
                     onClick={() => {
-                        rejectArticle(params.id as string);
+                        publicArticle(params.id as string);
                     }}
                 >
                     Pulic?
@@ -127,7 +128,6 @@ function Adminpage() {
     },
     {
       field: "Check",
-      // headerName: "Reject",
       headerAlign: "center",
       width: 120,
       sortable: false,
@@ -138,7 +138,7 @@ function Adminpage() {
             <div className={styles.modal}>
                 <button
                     onClick={() => {
-                        rejectArticle(params.id as string);
+                        checkArticle(params.id as string);
                     }}
                 >
                     Check?
@@ -160,7 +160,7 @@ function Adminpage() {
             <div className={styles.modal}>
                 <button
                     onClick={() => {
-                        rejectArticle(params.id as string);
+                      deleteArticle(params.id as string);
                     }}
                 >
                     Delete?
@@ -172,27 +172,50 @@ function Adminpage() {
   ];
   async function acceptArticle(articleId: string) {
     try {
-        const response = await axios.patch(`http://localhost:5000/api/update_article/${articleId}`, {
-            isAccepted: true,
-            isChecked: true
-        });
-        console.log(response.data.message);
-        window.location.reload();
+      const response = await axios.patch(`http://localhost:5000/api/toggle-article-status/${articleId}?property=isAccepted`);
+      window.location.reload(); 
+      return response.data;
     } catch (error) {
-        console.error('Failed to update article:', error);
+      console.error('Error accepting article:', error);
+      throw error;
     }
-}
+  }
 
-async function rejectArticle(articleId: string) {
+  async function checkArticle(articleId: string) {
     try {
-        await axios.patch(`http://localhost:5000/api/update_article/${articleId}`, {
-            isChecked: true
-        });
-        console.log("Article rejected successfully.");
-        window.location.reload();
+      const response = await axios.patch(`http://localhost:5000/api/toggle-article-status/${articleId}?property=isChecked`);
+      window.location.reload(); 
+      return response.data;
     } catch (error) {
-        console.error("Error rejecting the article:", error);
+      console.error('Error checking article:', error);
+      throw error;
     }
+  }
+
+  async function deleteArticle(articleId: string) {
+    try {
+      const response = await axios.delete(`http://localhost:5000/api/deleteResource/${articleId}`);
+      
+      if (response.status === 200) {
+        window.location.reload(); 
+        console.log('Article deleted successfully');
+      } else {
+        console.error('Failed to delete article');
+      }
+    } catch (error) {
+      console.error('Error deleting article:', error);
+    }
+  }
+
+async function publicArticle(articleId: string) {
+  try {
+    const response = await axios.patch(`http://localhost:5000/api/toggle-article-status/${articleId}?property=isPublished`);
+    window.location.reload(); 
+    return response.data;
+  } catch (error) {
+    console.error('Error rejecting article:', error);
+    throw error;
+  }
 }
 
   function closeModal() {
