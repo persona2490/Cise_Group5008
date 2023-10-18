@@ -91,7 +91,7 @@ function Moderatorpage() {
       align: "center",
       renderCell: (params: GridRenderCellParams) => {
         return (
-            <div className={styles.accept}>
+            <div className={styles.modal}>
                 <button
                     onClick={() => {
                         acceptArticle(params.id as string); 
@@ -113,7 +113,7 @@ function Moderatorpage() {
       align: "center",
       renderCell: (params: GridRenderCellParams) => {
         return (
-            <div className={styles.reject}>
+            <div className={styles.modal}>
                 <button
                     onClick={() => {
                         rejectArticle(params.id as string);
@@ -135,7 +135,7 @@ function Moderatorpage() {
       align: "center",
       renderCell: (params: GridRenderCellParams) => {
         return (
-            <div className={styles.reject}>
+            <div className={styles.modal}>
                 <button
                     onClick={() => {
                         rejectArticle(params.id as string);
@@ -157,7 +157,7 @@ function Moderatorpage() {
       align: "center",
       renderCell: (params: GridRenderCellParams) => {
         return (
-            <div className={styles.reject}>
+            <div className={styles.modal}>
                 <button
                     onClick={() => {
                         rejectArticle(params.id as string);
