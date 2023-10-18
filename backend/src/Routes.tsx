@@ -111,4 +111,27 @@ router.put('/:id', async (req, res) => {
     }
   });
 
+  router.get('/query_unpublished', async (req, res) => {
+    try {
+        const db = mongoose.connection.db;
+        const result = await db.collection('user').find({
+          $and: [
+            { isPublished: false }, 
+            { isAccepted: false }
+          ]
+        }).toArray();
+
+        if (result.length == 0) {
+            console.log("没有找到数据");
+            res.json({ message: "No unpublished and unaccepted articles found" });
+        } else {
+            res.json(result);
+        }
+  
+    } catch (err) {
+        console.error('Error while querying "user" collection:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
 module.exports = router;

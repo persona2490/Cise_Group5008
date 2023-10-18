@@ -1,135 +1,51 @@
-import React, { useState } from "react";
+"use client"
+import React, { useEffect, useState } from "react";
+import AppBar from "../navigation/AppBar";
 import classes from "./submission.module.css";
+import ArticleSearch from "./ArticleSearch";
 
-function ArticleSearch() {
-  // State for article details, not found message, and user inputs
-  const [articleDetails, setArticleDetails] = useState<any>(null);
-  const [notFoundMessage, setNotFoundMessage] = useState<string | null>(null);
-  const [userInputs, setUserInputs] = useState<Array<string[]>>([]);
+function Moderator() {
+  const [articles, setArticles] = useState<any[]>([]);
 
-  // Function to search for an article - replace with actual logic
-  async function searchArticle(event: React.FormEvent) {
-    event.preventDefault();
-    const dummyArticleDetails = {
-      Title: "Article Title",
-      Author: "Author Name",
-      Journal: "Journal Name",
-      Year: 2023,
-      Volume: "Volume Number",
-      Pages: "1-10",
-      DOI: "12345/DOI",
-    };
-
-    if (dummyArticleDetails) {
-      setArticleDetails(dummyArticleDetails);
-    } else {
-      setNotFoundMessage("Could not find this article, try again.");
+  useEffect(() => {
+    async function fetchArticles() {
+      try {
+        let response = await fetch("/query_unpublished");
+        let data = await response.json();
+        setArticles(data);
+      } catch (error) {
+        console.error("Error fetching articles:", error);
+      }
     }
-  }
-
-  // // Function to add a new row with user inputs
-  // function addRow() {
-  //   const newRow: string[] = new Array(8).fill("");
-  //   setUserInputs([...userInputs, newRow]);
-  // }
-
-  // Function to delete a row
-  function deleteRow(rowIndex: number) {
-    const updatedUserInputs = [...userInputs];
-    updatedUserInputs.splice(rowIndex, 1);
-    setUserInputs(updatedUserInputs);
-  }
-
-  // Function to handle accepting an article
-  function acceptArticle() {
-    console.log("Accepted article");
-  }
-
-  // Function to handle declining an article
-  function declineArticle() {
-    console.log("Declined article");
-  }
-
-  // Function to handle input changes in the table
-  function handleInputChange(rowIndex: number, colIndex: number, value: string) {
-    const updatedUserInputs = [...userInputs];
-    updatedUserInputs[rowIndex][colIndex] = value;
-    setUserInputs(updatedUserInputs);
-  }
+    fetchArticles();
+  }, []);
 
   return (
-    <div className={classes.container}>
-      <h1 className={classes.title}>MODERATOR PAGE</h1>
-
+    <div>
+      <AppBar />
       <div className={classes.tableRow}>
-        <div className={classes.articleText}>Article Title</div>
-        <div className={classes.articleText}>Author Name</div>
-        <div className={classes.articleText}>Journal Name</div>
-        <div className={classes.articleText}>Year</div>
-        <div className={classes.articleText}>Volume Number</div>
-        <div className={classes.articleText}>Pages</div>
-        <div className={classes.articleText}>DOI</div>
-        <div className={classes.articleText}>Actions</div>
+        {/* ... table headers as before ... */}
       </div>
-
-      {articleDetails && (
-        <div className={classes.tableRow}>
-          <div className={classes.articleText}>{articleDetails.Title}</div>
-          <div className={classes.articleText}>{articleDetails.Author}</div>
-          <div className={classes.articleText}>{articleDetails.Journal}</div>
-          <div className={classes.articleText}>{articleDetails.Year}</div>
-          <div className={classes.articleText}>{articleDetails.Volume}</div>
-          <div className={classes.articleText}>{articleDetails.Pages}</div>
-          <div className={classes.articleText}>{articleDetails.DOI}</div>
-          <div>
-            <button className={classes.acceptButton} onClick={acceptArticle}>
-              ACCEPT
-            </button>
-            <button className={classes.declineButton} onClick={declineArticle}>
-              DECLINE
-            </button>
-          </div>
-        </div>
-      )}
-
-      {userInputs.map((row, rowIndex) => (
-        <div key={rowIndex} className={classes.tableRow}>
-          {row.map((cell, colIndex) => (
-            <div key={colIndex} className={classes.articleText}>
-              <input
-                type="text"
-                value={cell}
-                onChange={(e) =>
-                  handleInputChange(rowIndex, colIndex, e.target.value)
-                }
-                style={{ width: "70px" }}
-              />
-            </div>
-          ))}
-          <div>
-            <button className={classes.acceptButton} onClick={acceptArticle}>
-              ACCEPT
-            </button>
-            <button className={classes.declineButton} onClick={declineArticle}>
-              DECLINE
-            </button>
-            <button
-              className={classes.declineButton}
-              onClick={() => deleteRow(rowIndex)}
-            >
-              Delete Row
-            </button>
+      <ArticleSearch />
+      
+      {/* Render articles from the state */}
+      {articles.map((article, index) => (
+        <div key={article._id} className={classes.tableRow}>
+          <div className={classes.articleText}>{article.Title}</div>
+          {/* Display the first author from the Authors array */}
+          <div className={classes.articleText}>{article.Authors[0]}</div>
+          <div className={classes.articleText}>{article.Journal}</div>
+          <div className={classes.articleText}>{article.Year}</div>
+          <div className={classes.articleText}>{article.Volume}</div>
+          <div className={classes.articleText}>{article.Pages}</div>
+          <div className={classes.articleText}>{article.DOI}</div>
+          <div className={classes.articleText}>
+            {/* You can add actions buttons here if needed */}
           </div>
         </div>
       ))}
-
-      {notFoundMessage && (
-        <div className={classes.notFoundMessage}>{notFoundMessage}</div>
-      )}
-
-  
     </div>
   );
 }
 
-export default ArticleSearch;
+export default Moderator;

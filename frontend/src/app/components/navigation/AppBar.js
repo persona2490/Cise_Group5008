@@ -20,11 +20,11 @@ const AppBar = () => {
               <a>Workspace</a>
             </DropdownMenu.Trigger>
             <DropdownMenu.Content>
-            <Link href="/components/Moderator">
+            <Link href="/components/Moderator" passHref>
                 <DropdownMenu.Item> Moderator</DropdownMenu.Item>
               </Link>
 
-              <Link href="/components/Analyst" passHref>
+              <Link href="/components/analyst" passHref>
               <DropdownMenu.Item> Analyst</DropdownMenu.Item>
               </Link>
             </DropdownMenu.Content>
