@@ -10,7 +10,7 @@ function Moderatorpage() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/published")
+      .get("http://localhost:5000/api/query_unpublished")
       .then((response) => {
         const data = response.data;
         setArticles(data);
@@ -91,20 +91,17 @@ function Moderatorpage() {
       align: "center",
       renderCell: (params: GridRenderCellParams) => {
         return (
-          <div className={styles.accept}>
-            <button
-              onClick={() => {
-                const article: Article | null =
-                  articles.find((a) => a._id === params.id) || null;
-                setSelectedArticle(article);
-                acceptArticle();
-              }}
-            >
-              Accept
-            </button>
-          </div>
+            <div className={styles.accept}>
+                <button
+                    onClick={() => {
+                        acceptArticle(params.id as string); 
+                    }}
+                >
+                    Accept
+                </button>
+            </div>
         );
-      },
+    }
     },
     {
       field: "reject",
@@ -116,30 +113,44 @@ function Moderatorpage() {
       align: "center",
       renderCell: (params: GridRenderCellParams) => {
         return (
-          <div className={styles.reject}>
-            <button
-              onClick={() => {
-                const article: Article | null =
-                  articles.find((a) => a._id === params.id) || null;
-                setSelectedArticle(article);
-                rejectArticle();
-              }}
-            >
-              Reject
-            </button>
-          </div>
+            <div className={styles.reject}>
+                <button
+                    onClick={() => {
+                        rejectArticle(params.id as string);
+                    }}
+                >
+                    Reject
+                </button>
+            </div>
         );
-      },
+    }
     },
   ];
-  function acceptArticle() {
-    console.log("accept");
-    window.location.reload();
-  }
-  function rejectArticle() {
-    console.log("reject");
-    window.location.reload();
-  }
+  async function acceptArticle(articleId: string) {
+    try {
+        const response = await axios.patch(`http://localhost:5000/api/update_article/${articleId}`, {
+            isAccepted: true,
+            isChecked: true
+        });
+        console.log(response.data.message);
+        window.location.reload();
+    } catch (error) {
+        console.error('Failed to update article:', error);
+    }
+}
+
+async function rejectArticle(articleId: string) {
+    try {
+        await axios.patch(`http://localhost:5000/api/update_article/${articleId}`, {
+            isChecked: true
+        });
+        console.log("Article rejected successfully.");
+        window.location.reload();
+    } catch (error) {
+        console.error("Error rejecting the article:", error);
+    }
+}
+
   function closeModal() {
     setIsModalOpen(false);
     setSelectedArticle(null);
