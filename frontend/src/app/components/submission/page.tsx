@@ -44,7 +44,7 @@ function Submission() {
       const result = await sendDataToServer(submitData);
       if (result.status == "success") {
         setIsModalOpen(true);
-        window.location.reload(); 
+       
       } else {
         console.error("Error sending data:", result.message);
       }
@@ -59,6 +59,7 @@ function Submission() {
   return (
     <div>
       <AppBar />
+     
       <div>
         <form className={classes.form} onSubmit={submitHandler}>
           <div className={classes.control}>
