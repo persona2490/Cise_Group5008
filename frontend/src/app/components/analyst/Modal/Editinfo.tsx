@@ -57,6 +57,7 @@ function EditInfo({ onClick, article }: EditInfoProps) {
       await axios.put(`http://localhost:5000/api/${article._id}`, updatedArticle);
       console.log("Article updated successfully!");
       onClick(event);
+      window.location.reload(); 
     } catch (error) {
       console.error("Error updating the article:", error);
     }

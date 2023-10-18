@@ -44,6 +44,7 @@ function Submission() {
       const result = await sendDataToServer(submitData);
       if (result.status == "success") {
         setIsModalOpen(true);
+        window.location.reload(); 
       } else {
         console.error("Error sending data:", result.message);
       }

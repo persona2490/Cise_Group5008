@@ -27,11 +27,11 @@ function ArticleSearch() {
     }
   }
 
-  // Function to add a new row with user inputs
-  function addRow() {
-    const newRow: string[] = new Array(8).fill("");
-    setUserInputs([...userInputs, newRow]);
-  }
+  // // Function to add a new row with user inputs
+  // function addRow() {
+  //   const newRow: string[] = new Array(8).fill("");
+  //   setUserInputs([...userInputs, newRow]);
+  // }
 
   // Function to delete a row
   function deleteRow(rowIndex: number) {
@@ -127,9 +127,7 @@ function ArticleSearch() {
         <div className={classes.notFoundMessage}>{notFoundMessage}</div>
       )}
 
-      <button className={classes.acceptButton} onClick={addRow}>
-        Add Row
-      </button>
+  
     </div>
   );
 }
