@@ -1,6 +1,8 @@
+// AppBar.tsx
 import React from "react";
 import Link from "next/link";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+
 const AppBar = () => {
   return (
     <div className="app-bar">
@@ -18,7 +20,7 @@ const AppBar = () => {
               <a>Workspace</a>
             </DropdownMenu.Trigger>
             <DropdownMenu.Content>
-              <Link href="/components/submission">
+            <Link href="/components/Moderator">
                 <DropdownMenu.Item> Moderator</DropdownMenu.Item>
               </Link>
 

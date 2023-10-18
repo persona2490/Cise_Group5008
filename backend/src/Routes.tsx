@@ -10,6 +10,7 @@ router.get('/query', async (req, res) => {
         const result = await db.collection('user').find({
           $and: [
             { isPublished: true }, 
+            { isAccepted: true },
             { $or: [
                 {"Authors": {$regex: query, $options: 'i'}},
                 {"Journal": {$regex: query, $options: 'i'}},
@@ -92,5 +93,22 @@ router.get('/published', async (req, res) => {
         res.status(500).json({ message: "Internal server error." });
     }
 });
+
+
+router.put('/:id', async (req, res) => {
+    const { id } = req.params;
+    
+    try {
+      const updatedArticle = await Article.findByIdAndUpdate(id, req.body, { new: true });
+      
+      if (!updatedArticle) {
+        return res.status(404).send('Article not found');
+      }
+  
+      res.status(200).send(updatedArticle);
+    } catch (error) {
+      res.status(500).send('Server error');
+    }
+  });
 
 module.exports = router;
