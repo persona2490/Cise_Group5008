@@ -1,51 +1,122 @@
-"use client"
-import React, { useEffect, useState } from "react";
-import AppBar from "../navigation/AppBar";
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 import classes from "./submission.module.css";
-import ArticleSearch from "./ArticleSearch";
 
-function Moderator() {
-  const [articles, setArticles] = useState<any[]>([]);
-
+function ArticleSearch() {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [notFoundMessage, setNotFoundMessage] = useState<string | null>(null);
+  const [userInputs, setUserInputs] = useState<Array<string[]>>([]);
+  
+  // Fetch articles from the backend on component mount
   useEffect(() => {
     async function fetchArticles() {
       try {
-        let response = await fetch("/query_unpublished");
-        let data = await response.json();
-        setArticles(data);
+        const response = await axios.get('http://localhost:5000/api/query_unpublished'); 
+        if (response.data && response.data.length > 0) {
+          setArticles(response.data);
+        } else {
+          setNotFoundMessage("No unpublished and unaccepted articles found");
+        }
       } catch (error) {
         console.error("Error fetching articles:", error);
+        setNotFoundMessage("Error fetching articles.");
       }
     }
     fetchArticles();
   }, []);
 
+  // Function to delete a row
+  function deleteRow(rowIndex: number) {
+    const updatedUserInputs = [...userInputs];
+    updatedUserInputs.splice(rowIndex, 1);
+    setUserInputs(updatedUserInputs);
+  }
+
+  // Function to handle accepting an article (note: you'll need to define backend calls here)
+  function acceptArticle(event: React.MouseEvent<HTMLButtonElement>, articleId: string) {
+    console.log("Accepted article with ID:", articleId);
+    // TODO: Implement API call to update the article as accepted
+  }
+
+  // Function to handle declining an article (note: you'll need to define backend calls here)
+  function declineArticle(event: React.MouseEvent<HTMLButtonElement>, articleId: string) {
+    console.log("Declined article with ID:", articleId);
+    // TODO: Implement API call to update the article as declined or deleted
+  }
+
+  // Function to handle input changes in the table
+  function handleInputChange(rowIndex: number, colIndex: number, value: string) {
+    const updatedUserInputs = [...userInputs];
+    updatedUserInputs[rowIndex][colIndex] = value;
+    setUserInputs(updatedUserInputs);
+  }
+
   return (
-    <div>
-      <AppBar />
+    <div className={classes.container}>
+      <h1 className={classes.title}>MODERATOR PAGE</h1>
+
       <div className={classes.tableRow}>
-        {/* ... table headers as before ... */}
+        <div className={classes.articleText}>Article Title</div>
+        <div className={classes.articleText}>Author Name</div>
+        <div className={classes.articleText}>Journal Name</div>
+        <div className={classes.articleText}>Year</div>
+        <div className={classes.articleText}>Volume Number</div>
+        <div className={classes.articleText}>Pages</div>
+        <div className={classes.articleText}>DOI</div>
+        <div className={classes.articleText}>Actions</div>
       </div>
-      <ArticleSearch />
-      
-      {/* Render articles from the state */}
+
       {articles.map((article, index) => (
-        <div key={article._id} className={classes.tableRow}>
+        <div key={index} className={classes.tableRow}>
           <div className={classes.articleText}>{article.Title}</div>
-          {/* Display the first author from the Authors array */}
-          <div className={classes.articleText}>{article.Authors[0]}</div>
+          <div className={classes.articleText}>{article.Authors}</div>
           <div className={classes.articleText}>{article.Journal}</div>
           <div className={classes.articleText}>{article.Year}</div>
           <div className={classes.articleText}>{article.Volume}</div>
           <div className={classes.articleText}>{article.Pages}</div>
           <div className={classes.articleText}>{article.DOI}</div>
-          <div className={classes.articleText}>
-            {/* You can add actions buttons here if needed */}
+          <div>
+          <button onClick={(e) => acceptArticle(e, article._id)}>ACCEPT</button>
+          <button onClick={(e) => declineArticle(e, article._id)}>DECLINE</button>
           </div>
         </div>
       ))}
+
+      {userInputs.map((row, rowIndex) => (
+        <div key={rowIndex} className={classes.tableRow}>
+          {row.map((cell, colIndex) => (
+            <div key={colIndex} className={classes.articleText}>
+              <input
+                type="text"
+                value={cell}
+                onChange={(e) =>
+                  handleInputChange(rowIndex, colIndex, e.target.value)
+                }
+                style={{ width: "70px" }}
+              />
+            </div>
+          ))}
+        </div>
+      ))}
+
+      {notFoundMessage && (
+        <div className={classes.notFoundMessage}>{notFoundMessage}</div>
+      )}
     </div>
   );
 }
 
-export default Moderator;
+export default ArticleSearch;
+
+type Article = {
+  _id: string;
+  Title: string;
+  Authors: string;
+  Journal: string;
+  Year: number;
+  Volume: string;
+  Pages: string;
+  DOI: string;
+  isPublished: boolean;
+  isAccepted: boolean;
+};
