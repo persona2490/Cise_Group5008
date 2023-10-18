@@ -22,7 +22,7 @@ const AppBar = () => {
                 <DropdownMenu.Item> Moderator</DropdownMenu.Item>
               </Link>
 
-              <Link href="/components/analyst" passHref>
+              <Link href="/components/Analyst" passHref>
               <DropdownMenu.Item> Analyst</DropdownMenu.Item>
               </Link>
             </DropdownMenu.Content>
