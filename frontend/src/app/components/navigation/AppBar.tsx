@@ -9,6 +9,7 @@ class AppBar extends Component {
         <div className="left">
           {/* left icon */}
           <img src="/Assets/icon.jpg" alt="Icon" />
+          
         </div>
         <div className="right">
           <div className="button">
