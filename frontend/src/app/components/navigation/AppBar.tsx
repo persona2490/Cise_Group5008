@@ -11,6 +11,7 @@ class AppBar extends Component {
           <img src="/Assets/icon.jpg" alt="Icon" />
           
         </div>
+        <h1>SPEED</h1>
         <div className="right">
           <div className="button">
             <button>Login</button>
