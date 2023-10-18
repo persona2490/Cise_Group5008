@@ -3,7 +3,7 @@ import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import styles from "./moderator.module.css";
 import axios from "axios";
 
-function Moderatorpage() {
+function Adminpage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [articles, setArticles] = useState<Article[]>([]);
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
@@ -228,4 +228,4 @@ interface Article {
   DOI: string;
 }
 
-export default Moderatorpage;
+export default Adminpage;
