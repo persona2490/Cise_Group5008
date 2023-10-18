@@ -3,7 +3,7 @@ import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import styles from "./moderator.module.css";
 import axios from "axios";
 
-function Moderatorpage() {
+function Adminpage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [articles, setArticles] = useState<Article[]>([]);
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
@@ -91,7 +91,7 @@ function Moderatorpage() {
       align: "center",
       renderCell: (params: GridRenderCellParams) => {
         return (
-            <div className={styles.accept}>
+            <div className={styles.modal}>
                 <button
                     onClick={() => {
                         acceptArticle(params.id as string); 
@@ -113,7 +113,7 @@ function Moderatorpage() {
       align: "center",
       renderCell: (params: GridRenderCellParams) => {
         return (
-            <div className={styles.reject}>
+            <div className={styles.modal}>
                 <button
                     onClick={() => {
                         rejectArticle(params.id as string);
@@ -135,7 +135,7 @@ function Moderatorpage() {
       align: "center",
       renderCell: (params: GridRenderCellParams) => {
         return (
-            <div className={styles.reject}>
+            <div className={styles.modal}>
                 <button
                     onClick={() => {
                         rejectArticle(params.id as string);
@@ -157,7 +157,7 @@ function Moderatorpage() {
       align: "center",
       renderCell: (params: GridRenderCellParams) => {
         return (
-            <div className={styles.reject}>
+            <div className={styles.modal}>
                 <button
                     onClick={() => {
                         rejectArticle(params.id as string);
@@ -228,4 +228,4 @@ interface Article {
   DOI: string;
 }
 
-export default Moderatorpage;
+export default Adminpage;
