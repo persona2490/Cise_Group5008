@@ -48,6 +48,7 @@ router.post('/submit', async (req, res) => {
 
         const isPublished = req.body.isPublished || false;
         const isAccepted = req.body.isPublished || false;
+        const isChecked = req.body.isPublished || false;
 
         const result = await db.collection('user').insertOne({
             Title,
@@ -58,7 +59,8 @@ router.post('/submit', async (req, res) => {
             Pages,
             DOI,
             isPublished,
-            isAccepted
+            isAccepted,
+            isChecked
         });
 
         console.log("Data to be inserted:", JSON.stringify(result));
@@ -80,7 +82,8 @@ const articleSchema = new mongoose.Schema({
     pages: String,
     DOI: String,
     isPublished: Boolean,
-    isAccepted:Boolean
+    isAccepted:Boolean,
+    isChecked:Boolean
   });
   
 const Article = mongoose.model('Article', articleSchema, 'user');
@@ -110,5 +113,42 @@ router.put('/:id', async (req, res) => {
       res.status(500).send('Server error');
     }
   });
+
+  router.get('/query_unpublished', async (req, res) => {
+    try {
+        const db = mongoose.connection.db;
+        const result = await db.collection('user').find({
+          $and: [
+            { isPublished: false }, 
+            { isAccepted: false },
+            { isChecked: false }
+          ]
+        }).toArray();
+
+        if (result.length == 0) {
+            //console.log("没有找到数据");
+            res.json({ message: "No unpublished and unaccepted articles found" });
+        } else {
+            res.json(result);
+        }
+  
+    } catch (err) {
+        console.error('Error while querying "user" collection:', err);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+router.patch('/update_article/:id', async (req, res) => {
+    const articleId = req.params.id;
+    const updatedData = req.body;
+
+    try {
+        await Article.findByIdAndUpdate(articleId, updatedData);
+        res.status(200).send({ message: 'Article updated successfully' });
+    } catch (error) {
+        res.status(500).send({ message: 'Failed to update article', error });
+    }
+});
+
 
 module.exports = router;

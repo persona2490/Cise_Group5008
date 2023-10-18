@@ -2,18 +2,16 @@
 "use client";
 import React from "react";
 import AppBar from "../navigation/AppBar";
-import classes from "./submission.module.css";
-import ArticleSearch from "./ArticleSearch";
+import Moderatorpage from "./moderator";
 
 function Moderator() {
 
 
   return (
     <div>
-      <AppBar />
+      <AppBar /> 
       <div>
-        <ArticleSearch /> {}
-
+        <Moderatorpage /> 
       </div>
     </div>
   );
