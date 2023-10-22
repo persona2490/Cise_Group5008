@@ -171,6 +171,13 @@ function Moderatorpage() {
             columns={columns}
             disableRowSelectionOnClick
             getRowId={(row) => row._id}
+            initialState={{
+              pagination: {
+                paginationModel: { page: 0, pageSize: 5 },
+              },
+            }}
+            pageSizeOptions={[5, 10,15]}
+    
           />
         </div>
         {/* {isModalOpen && <EditInfo onClick={closeModal} article={selectedArticle} />} */}

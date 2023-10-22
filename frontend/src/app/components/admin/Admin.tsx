@@ -226,12 +226,19 @@ async function publicArticle(articleId: string) {
   return (
     <div>
       <br />
-      <div style={{ height: 400, width: "100%" }}>
+      <div style={{ height: 600, width: "100%" }}>
         <DataGrid
           rows={articles}
           columns={columns}
           disableRowSelectionOnClick
           getRowId={(row) => row._id}
+
+          initialState={{
+            pagination: {
+              paginationModel: { page: 0, pageSize: 5 },
+            },
+          }}
+          pageSizeOptions={[5,10, 15]}
         />
       </div>
    
