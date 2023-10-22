@@ -6,14 +6,19 @@ import TextField from "@mui/material/TextField";
 
 interface Article {
   _id: string;
-  Title: string;
-  Authors: string;
-  Journal: string;
-  Year: number;
-  Pages: string;
-  IsAccepted: boolean;
-  isPublished: boolean;
-  DOI: string;
+  Title: String,
+  Authors: [String],
+  Journal: String,
+  Year: Number,
+  Volume: String,
+  Pages: String,
+  DOI: String,
+  isPublished: Boolean,
+  isAccepted:Boolean,
+  isChecked:Boolean,
+  Claim: String,
+  Evidence: String,
+  Research: String,
 }
 
 interface EditInfoProps {
@@ -27,6 +32,9 @@ function EditInfo({ onClick, article }: EditInfoProps) {
   const [journalName, setJournalName] = useState(article?.Journal || "");
   const [years, setYears] = useState(article?.Year.toString() || "");
   const [pages, setPages] = useState(article?.Pages || "");
+  const [claim, setClaim] = useState(article ? article.Claim || "" : "");
+  const [evidence, setEvidence] = useState(article ? article.Evidence || "" : "");
+  const [research, setResearch] = useState(article ? article.Research || "" : "");
 
   useEffect(() => {
     if (article) {
@@ -35,8 +43,9 @@ function EditInfo({ onClick, article }: EditInfoProps) {
       setJournalName(article.Journal);
       setYears(article.Year.toString());
       setPages(article.Pages);
+
     }
-  }, [article]);
+  }, [article]); 
 
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -50,12 +59,18 @@ function EditInfo({ onClick, article }: EditInfoProps) {
       Year: parseInt(years),
       Pages: pages,
       isPublished: true,
+      Claim:claim,
+      Evidence:evidence,
+      Research:research,
+
     };
+  
     console.log('Updating article with data:', updatedArticle);
     try {
       const response = await axios.put(`http://localhost:5000/api/${article._id}`, updatedArticle);
       onClick(event);
-      window.location.reload();
+      
+      //window.location.reload();
     } catch (error) {
       console.error("Error updating the article:", error);
     }
@@ -106,18 +121,29 @@ function EditInfo({ onClick, article }: EditInfoProps) {
               value={pages}
               onChange={(e) => setPages(e.target.value)}
             />
-            <TextField id="claim" label="Claim" multiline maxRows={2} />
+            
+            <TextField 
+              id="claim" 
+              label="Claim" 
+              multiline maxRows={2} 
+              placeholder="Claim"
+              value={claim}
+              onChange={(e) => setClaim(e.target.value)}
+            />
+            
             <TextField
               id="evidence"
               label="Evidence"
               placeholder="Result of Evidence"
-              onChange={(e) => setPages(e.target.value)}
+              value={evidence}
+              onChange={(e) => setEvidence(e.target.value)}
             />
             <TextField
               id="research"
               label="Research"
               placeholder="Type of research"
-              onChange={(e) => setPages(e.target.value)}
+              value={research}
+              onChange={(e) => setResearch(e.target.value)}
             />
           </div>
         </Box>

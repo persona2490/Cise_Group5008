@@ -74,16 +74,19 @@ router.post('/submit', async (req, res) => {
 
 
 const articleSchema = new mongoose.Schema({
-    Title: String,
-    Authors: [String],
-    Journal: String,
-    Year: Number,
-    Volume: String,
-    Pages: String,
-    DOI: String,
-    isPublished: Boolean,
-    isAccepted:Boolean,
-    isChecked:Boolean
+  Title: String,
+  Authors: [String],
+  Journal: String,
+  Year: Number,
+  Volume: String,
+  Pages: String,
+  DOI: String,
+  isPublished: Boolean,
+  isAccepted:Boolean,
+  isChecked:Boolean,
+  Claim: String,
+  Evidence: String,
+  Research: String,
   });
   
 const Article = mongoose.model('Article', articleSchema, 'user');

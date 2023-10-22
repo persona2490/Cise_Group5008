@@ -140,14 +140,19 @@ function Analyst() {
 
 interface Article {
   _id: string;
-  Title: string;
-  Authors: string;
-  Journal: string;
-  Year: number;
-  Pages: string;
-  IsAccepted: boolean;
-  isPublished: boolean;
-  DOI: string;
+  Title: String,
+  Authors: [String],
+  Journal: String,
+  Year: Number,
+  Volume: String,
+  Pages: String,
+  DOI: String,
+  isPublished: Boolean,
+  isAccepted:Boolean,
+  isChecked:Boolean,
+  Claim: String,
+  Evidence: String,
+  Research: String,
 }
 
 export default Analyst;
