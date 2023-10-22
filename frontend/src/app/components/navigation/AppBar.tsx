@@ -9,7 +9,6 @@ class AppBar extends Component {
         <div className="left">
           {/* left icon */}
           <img src="/Assets/icon.jpg" alt="Icon" />
-          
         </div>
         <h1>SPEED</h1>
         <div className="right">
@@ -35,7 +34,7 @@ class AppBar extends Component {
               </DropdownMenu.Content>
             </DropdownMenu.Root>
 
-            <Link legacyBehavior href="/" passHref>
+            <Link legacyBehavior href="/components/search" passHref>
               <a>Search</a>
             </Link>
             <Link legacyBehavior href="/components/submission" passHref>
@@ -56,6 +55,10 @@ class AppBar extends Component {
             background-color: white;
             color: black;
             border: 1px solid #ccc;
+            position: fixed;
+            top: 0;
+            width: 97.1%;
+            z-index: 1000;
           }
           .left img {
             width: 95px;

@@ -94,16 +94,16 @@ function Analyst() {
       renderCell: (params: GridRenderCellParams) => {
         return (
           <div className={styles.edit}>
-          <button
-            onClick={() => {
-              const article: Article | null =
-                articles.find((a) => a._id === params.id) || null;
-              setSelectedArticle(article);
-              setIsModalOpen(true);
-            }}
-          >
-            Edit
-          </button>
+            <button
+              onClick={() => {
+                const article: Article | null =
+                  articles.find((a) => a._id === params.id) || null;
+                setSelectedArticle(article);
+                setIsModalOpen(true);
+              }}
+            >
+              Edit
+            </button>
           </div>
         );
       },
@@ -118,20 +118,22 @@ function Analyst() {
   return (
     <div>
       <AppBar />
-      <br />
-      <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={articles}
-          columns={columns}
-          disableRowSelectionOnClick
-          pageSizeOptions={[3, 10]}
-          getRowId={(row) => row._id}
-          
-        />
+      <div className={styles.content}>
+      
+        <div className={styles.content} style={{ height: 400, width: "100%" }}>
+          <DataGrid
+            rows={articles}
+            columns={columns}
+            disableRowSelectionOnClick
+            pageSizeOptions={[3, 10]}
+            getRowId={(row) => row._id}
+          />
+        </div>
+        {isModalOpen && (
+          <EditInfo onClick={closeModal} article={selectedArticle} />
+        )}
+     
       </div>
-      {isModalOpen && (
-        <EditInfo onClick={closeModal} article={selectedArticle} />
-      )}
     </div>
   );
 }
