@@ -66,6 +66,7 @@ function EditInfo({ onClick, article }: EditInfoProps) {
     };
   
     console.log('Updating article with data:', updatedArticle);
+
     try {
       const response = await axios.put(`http://localhost:5000/api/${article._id}`, updatedArticle);
       onClick(event);
@@ -126,7 +127,7 @@ function EditInfo({ onClick, article }: EditInfoProps) {
               id="claim" 
               label="Claim" 
               multiline maxRows={2} 
-              placeholder="Claim"
+              // placeholder="Claim"
               value={claim}
               onChange={(e) => setClaim(e.target.value)}
             />

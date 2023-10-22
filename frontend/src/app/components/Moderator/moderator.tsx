@@ -91,17 +91,17 @@ function Moderatorpage() {
       align: "center",
       renderCell: (params: GridRenderCellParams) => {
         return (
-            <div className={styles.accept}>
-                <button
-                    onClick={() => {
-                        acceptArticle(params.id as string); 
-                    }}
-                >
-                    Accept
-                </button>
-            </div>
+          <div className={styles.accept}>
+            <button
+              onClick={() => {
+                acceptArticle(params.id as string);
+              }}
+            >
+              Accept
+            </button>
+          </div>
         );
-    }
+      },
     },
     {
       field: "reject",
@@ -113,43 +113,49 @@ function Moderatorpage() {
       align: "center",
       renderCell: (params: GridRenderCellParams) => {
         return (
-            <div className={styles.reject}>
-                <button
-                    onClick={() => {
-                        rejectArticle(params.id as string);
-                    }}
-                >
-                    Reject
-                </button>
-            </div>
+          <div className={styles.reject}>
+            <button
+              onClick={() => {
+                rejectArticle(params.id as string);
+              }}
+            >
+              Reject
+            </button>
+          </div>
         );
-    }
+      },
     },
   ];
   async function acceptArticle(articleId: string) {
     try {
-        const response = await axios.patch(`http://localhost:5000/api/update_article/${articleId}`, {
-            isAccepted: true,
-            isChecked: true
-        });
-        console.log(response.data.message);
-        window.location.reload();
+      const response = await axios.patch(
+        `http://localhost:5000/api/update_article/${articleId}`,
+        {
+          isAccepted: true,
+          isChecked: true,
+        }
+      );
+      console.log(response.data.message);
+      window.location.reload();
     } catch (error) {
-        console.error('Failed to update article:', error);
+      console.error("Failed to update article:", error);
     }
-}
+  }
 
-async function rejectArticle(articleId: string) {
+  async function rejectArticle(articleId: string) {
     try {
-        await axios.patch(`http://localhost:5000/api/update_article/${articleId}`, {
-            isChecked: true
-        });
-        console.log("Article rejected successfully.");
-        window.location.reload();
+      await axios.patch(
+        `http://localhost:5000/api/update_article/${articleId}`,
+        {
+          isChecked: true,
+        }
+      );
+      console.log("Article rejected successfully.");
+      window.location.reload();
     } catch (error) {
-        console.error("Error rejecting the article:", error);
+      console.error("Error rejecting the article:", error);
     }
-}
+  }
 
   function closeModal() {
     setIsModalOpen(false);
@@ -158,16 +164,17 @@ async function rejectArticle(articleId: string) {
 
   return (
     <div>
-      <br />
-      <div style={{ height: 400, width: "100%" }}>
-        <DataGrid
-          rows={articles}
-          columns={columns}
-          disableRowSelectionOnClick
-          getRowId={(row) => row._id}
-        />
+      <div className={styles.comtent}>
+        <div style={{ height: 400, width: "100%" }}>
+          <DataGrid
+            rows={articles}
+            columns={columns}
+            disableRowSelectionOnClick
+            getRowId={(row) => row._id}
+          />
+        </div>
+        {/* {isModalOpen && <EditInfo onClick={closeModal} article={selectedArticle} />} */}
       </div>
-      {/* {isModalOpen && <EditInfo onClick={closeModal} article={selectedArticle} />} */}
     </div>
   );
 }

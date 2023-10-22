@@ -60,7 +60,7 @@ function Submission() {
     <div>
       <AppBar />
      
-      <div>
+      <div className={classes.content}>
         <form className={classes.form} onSubmit={submitHandler}>
           <div className={classes.control}>
             <label htmlFor="title">Title:</label>

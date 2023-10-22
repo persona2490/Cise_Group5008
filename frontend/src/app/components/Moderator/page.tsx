@@ -3,14 +3,14 @@
 import React from "react";
 import AppBar from "../navigation/AppBar";
 import Moderatorpage from "./moderator";
-
+import styles from "./moderator.module.css";
 function Moderator() {
 
 
   return (
     <div>
       <AppBar /> 
-      <div>
+      <div className={styles.content}>
         <Moderatorpage /> 
       </div>
     </div>

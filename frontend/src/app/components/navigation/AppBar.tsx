@@ -58,7 +58,7 @@ class AppBar extends Component {
             position: fixed;
             top: 0;
             width: 97.1%;
-            z-index: 1000;
+ 
           }
           .left img {
             width: 95px;
