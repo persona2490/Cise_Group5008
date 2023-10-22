@@ -58,7 +58,7 @@ function Submission() {
 
   return (
     <div>
-      <AppBar />
+      <AppBar title="" />
      
       <div className={classes.content}>
         <form className={classes.form} onSubmit={submitHandler}>

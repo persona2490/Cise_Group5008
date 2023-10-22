@@ -44,8 +44,8 @@ const AppBar: React.FC<AppBarProps> = ({ title }) => {
             <Link legacyBehavior href="/components/submission" passHref>
               <a>Submit</a>
             </Link>
-            <Link legacyBehavior href="/components/About" passHref>
-              <a>About</a>
+            <Link legacyBehavior href="/" passHref>
+              <a>Home Page</a>
             </Link>
           </div>
         </div>
@@ -62,7 +62,7 @@ const AppBar: React.FC<AppBarProps> = ({ title }) => {
             position: fixed;
             top: 0;
             width: 97.1%;
- 
+
           }
           .app-bar h2{
             font-family: 'Roboto', sans-serif; 

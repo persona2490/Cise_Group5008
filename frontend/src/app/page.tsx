@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
 import AppBar from "./components/navigation/AppBar";
-import styles from "./HomePage.module.css"; // 导入CSS样式文件
+import styles from "./HomePage.module.css"; 
 
 const HomePage: React.FC = () => {
   return (
     <div>
-      <AppBar title="Home Page" />
+      <AppBar title="" />
 
       <div className={styles.welcomeContainer}>
         <h1>Welcome to Speed</h1>
