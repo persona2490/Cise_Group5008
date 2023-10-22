@@ -3,7 +3,7 @@
 import React from "react";
 import AppBar from "../navigation/AppBar";
 import AdminPage from "./Admin";
-import styles from "./moderator.module.css";
+import styles from "./admin.module.css";
 function Administor() {
 
 

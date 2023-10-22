@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import styles from "./moderator.module.css";
+import styles from "./admin.module.css";
 import axios from "axios";
 
 function Adminpage() {
@@ -9,12 +9,12 @@ function Adminpage() {
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
 
   useEffect(() => {
-    // 在组件加载时从后端获取所有文章数据
+  
     axios
       .get("http://localhost:5000/api/articles")
       .then((response) => {
         const data = response.data;
-        setArticles(data); // 存储文章数据到状态
+        setArticles(data); 
       })
       .catch((error) => {
         console.error("There was an error fetching the articles:", error);
