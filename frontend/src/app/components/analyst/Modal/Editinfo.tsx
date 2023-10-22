@@ -51,13 +51,9 @@ function EditInfo({ onClick, article }: EditInfoProps) {
       Pages: pages,
       isPublished: true,
     };
-
+    console.log('Updating article with data:', updatedArticle);
     try {
-      await axios.put(
-        `http://localhost:5000/api/${article._id}`,
-        updatedArticle
-      );
-      console.log("Article updated successfully!");
+      const response = await axios.put(`http://localhost:5000/api/${article._id}`, updatedArticle);
       onClick(event);
       window.location.reload();
     } catch (error) {

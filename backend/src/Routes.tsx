@@ -79,7 +79,7 @@ const articleSchema = new mongoose.Schema({
     Journal: String,
     Year: Number,
     Volume: String,
-    pages: String,
+    Pages: String,
     DOI: String,
     isPublished: Boolean,
     isAccepted:Boolean,
@@ -99,20 +99,27 @@ router.get('/published', async (req, res) => {
 
 
 router.put('/:id', async (req, res) => {
-    const { id } = req.params;
-    
-    try {
+  const { id } = req.params;
+  
+  console.log('Received request to update article with id:', id);
+  console.log('Received request body:', req.body);
+
+  try {
       const updatedArticle = await Article.findByIdAndUpdate(id, req.body, { new: true });
       
       if (!updatedArticle) {
-        return res.status(404).send('Article not found');
+          console.error('Article not found for id:', id);
+          return res.status(404).send('Article not found');
       }
-  
+
+      console.log('Updated article:', updatedArticle);
+      
       res.status(200).send(updatedArticle);
-    } catch (error) {
+  } catch (error) {
+      console.error('Server error:', error);
       res.status(500).send('Server error');
-    }
-  });
+  }
+});
 
   router.get('/query_unpublished', async (req, res) => {
     try {
