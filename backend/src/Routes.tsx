@@ -93,7 +93,10 @@ const Article = mongoose.model('Article', articleSchema, 'user');
 
 router.get('/published', async (req, res) => {
     try {
-        const articles = await Article.find({ isAccepted: true });
+        const articles = await Article.find({$and: [
+          { isPublished: false }, 
+          { isAccepted: true },
+        ]});
         res.json(articles);
     } catch (err) {
         res.status(500).json({ message: "Internal server error." });
@@ -162,8 +165,6 @@ router.patch('/update_article/:id', async (req, res) => {
 
 router.get('/articles', async (req, res) => {
     try {
-
-      //console.log("检索所有文章");
       const articles = await Article.find({});
       res.json(articles);
     } catch (error) {
