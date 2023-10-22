@@ -2,15 +2,19 @@ import React, { Component } from "react";
 import Link from "next/link";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 
-class AppBar extends Component {
-  render() {
+interface AppBarProps {
+  title: string;
+}
+
+const AppBar: React.FC<AppBarProps> = ({ title }) => {
+  
     return (
       <div className="app-bar">
         <div className="left">
           {/* left icon */}
           <img src="/Assets/icon.jpg" alt="Icon" />
         </div>
-        <h1>SPEED</h1>
+       <h2>{title}</h2>
         <div className="right">
           <div className="button">
             <button>Login</button>
@@ -40,7 +44,7 @@ class AppBar extends Component {
             <Link legacyBehavior href="/components/submission" passHref>
               <a>Submit</a>
             </Link>
-            <Link legacyBehavior href="/page3" passHref>
+            <Link legacyBehavior href="/components/About" passHref>
               <a>About</a>
             </Link>
           </div>
@@ -59,6 +63,9 @@ class AppBar extends Component {
             top: 0;
             width: 97.1%;
  
+          }
+          .app-bar h2{
+            font-family: 'Roboto', sans-serif; 
           }
           .left img {
             width: 95px;
@@ -103,7 +110,7 @@ class AppBar extends Component {
         `}</style>
       </div>
     );
-  }
+  
 }
 
 export default AppBar;

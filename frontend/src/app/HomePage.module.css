@@ -1,0 +1,58 @@
+/* HomePage.module.css */
+
+.welcomeContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px;
+  text-align: center;
+  padding-top: 110px !important;
+}
+
+.welcomeContainer h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.welcomeContainer p {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 40px;
+}
+
+.features {
+  display: flex;
+  justify-content: space-around;
+}
+
+.feature {
+  flex: 1;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  margin: 0 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.feature h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* AppBar styles (similar to your previous styles) */
+.app-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  height: 70px;
+  background-color: #ffffff;
+  color: #333333;
+  border: 1px solid #ccc;
+  position: fixed;
+  top: 0;
+  width: 97.1%;
+  z-index: 1000;
+}
+
+/* ... add more styles as needed */

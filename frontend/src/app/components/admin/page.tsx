@@ -9,7 +9,7 @@ function Administor() {
 
   return (
     <div>
-      <AppBar /> 
+      <AppBar title="Admin Page"/> 
       <div className={styles.content}>
         <AdminPage /> 
       </div>

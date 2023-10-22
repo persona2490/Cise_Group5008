@@ -9,7 +9,7 @@ function Moderator() {
 
   return (
     <div>
-      <AppBar /> 
+      <AppBar title="Moderator Page" /> 
       <div className={styles.content}>
         <Moderatorpage /> 
       </div>

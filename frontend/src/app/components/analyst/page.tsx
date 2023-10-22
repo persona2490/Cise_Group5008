@@ -117,7 +117,7 @@ function Analyst() {
 
   return (
     <div>
-      <AppBar />
+      <AppBar title="Analyst Page" />
       <div className={styles.content}>
       
         <div className={styles.content} style={{ height: 400, width: "100%" }}>
