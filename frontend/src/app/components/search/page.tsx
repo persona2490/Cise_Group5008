@@ -7,6 +7,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { DataGrid } from '@mui/x-data-grid';
 
 type SearchResult = { [key: string]: string };
 function SearchPage() {
@@ -16,6 +17,22 @@ function SearchPage() {
   const [sortDirection, setSortDirection] = useState<"asc" | "desc" | null>(
     null
   );
+  const [showResults, setShowResults] = useState(false);
+
+  const columns = [
+    { field: 'Title', headerName: 'Title', width: 200 },
+    { field: 'Authors', headerName: 'Authors', width: 200 },
+    { field: 'Journal', headerName: 'Journal', width: 200 },
+    { field: 'Year', headerName: 'Year', width: 200 },
+    { field: 'Pages', headerName: 'Pages', width: 200 },
+    { field: 'DOI', headerName: 'DOI', width: 200 },
+    { field: 'Claim', headerName: 'Claim', width: 200 },
+    { field: 'Evidence', headerName: 'Evidence', width: 200 },
+    { field: 'Research', headerName: 'Research', width: 200 },
+    { field: 'Participant_Type', headerName: 'Participant_Type', width: 200 },
+    { field: 'SE_Method', headerName: 'SE_Method', width: 200 },
+  ];
+
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
   const [showSearchHistory, setShowSearchHistory] = useState(true);
 
@@ -50,10 +67,13 @@ function SearchPage() {
 
     if (currentQuery.trim() === "") {
       setSearchResult([{ Message: "please input a keyword" }]);
+      setShowResults(false);
     } else if (/^\d+$/.test(currentQuery.trim())) {
       setSearchResult([{ Message: "Please enter a non-numeric keyword" }]);
+      setShowResults(false);
     } else {
       handleSearch(currentQuery);
+      setShowResults(true);
     }
     setShowSearchHistory(false);
   };
@@ -121,8 +141,8 @@ function SearchPage() {
   };
 
   const handleHistoryClick = (historyQuery: string) => {
-    setSearchQuery(historyQuery); // Update the input field value
-    handleIconClick(historyQuery); // Search using the selected history query
+    setSearchQuery(historyQuery);
+    handleIconClick(historyQuery);
   };
 
   const displayOrder = [
@@ -134,6 +154,11 @@ function SearchPage() {
     "Volume",
     "DOI",
   ];
+
+  const rows = searchResult.map((result, index) => ({
+    id: index,
+    ...result,
+  }));
 
   return (
     <div>
@@ -187,39 +212,19 @@ function SearchPage() {
           </div>
         )}
 
-        <div className="search-results">
-          <table>
-            <tbody>
-              {searchResult.length > 0 &&
-              searchResult[0].hasOwnProperty("Message") ? (
-                <tr>
-                  <td>{searchResult[0].Message}</td>
-                </tr>
-              ) : (
-                <>
-                  {searchResult.length > 0 && (
-                    <tr>
-                      {displayOrder.map((key) => (
-                        <th key={key} onClick={() => handleSortClick(key)}>
-                          {key}
-                          {sortField === key &&
-                            (sortDirection === "asc" ? " ↑" : " ↓")}
-                        </th>
-                      ))}
-                    </tr>
-                  )}
-                  {searchResult.map((result, rowIndex) => (
-                    <tr key={rowIndex}>
-                      {displayOrder.map((key) => (
-                        <td key={key}>{result[key]}</td>
-                      ))}
-                    </tr>
-                  ))}
-                </>
-              )}
-            </tbody>
-          </table>
-        </div>
+        {showResults && (
+          <div className="search-results">
+            <div style={{ height: 400, width: '100%' }}>
+              <DataGrid
+                rows={rows}
+                columns={columns}
+                //pageSize={5}
+                //rowsPerPageOptions={[5]}
+                checkboxSelection
+              />
+            </div>
+          </div>
+        )}
       </div>
 
       <style jsx>{`
