@@ -137,7 +137,7 @@ function SearchPage() {
 
   return (
     <div>
-      <AppBar />
+      <AppBar title="" />
       <div className="content">
         <h1>Explore the world’s knowledge, cultures, and ideas</h1>
 
