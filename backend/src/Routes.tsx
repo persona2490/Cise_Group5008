@@ -83,7 +83,10 @@ const articleSchema = new mongoose.Schema({
     DOI: String,
     isPublished: Boolean,
     isAccepted:Boolean,
-    isChecked:Boolean
+    isChecked:Boolean,
+    claim: String,
+    evidence: String,
+    research: String,
   });
   
 const Article = mongoose.model('Article', articleSchema, 'user');

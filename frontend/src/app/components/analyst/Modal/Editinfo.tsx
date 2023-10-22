@@ -27,6 +27,9 @@ function EditInfo({ onClick, article }: EditInfoProps) {
   const [journalName, setJournalName] = useState(article?.Journal || "");
   const [years, setYears] = useState(article?.Year.toString() || "");
   const [pages, setPages] = useState(article?.Pages || "");
+  const [claim, setClaim] = useState("");
+  const [evidence, setEvidence] = useState("");
+  const [research, setResearch] = useState("");
 
   useEffect(() => {
     if (article) {
@@ -50,6 +53,10 @@ function EditInfo({ onClick, article }: EditInfoProps) {
       Year: parseInt(years),
       Pages: pages,
       isPublished: true,
+      Claim:claim,
+      Evidence:evidence,
+      Research:research,
+
     };
     console.log('Updating article with data:', updatedArticle);
     try {
@@ -103,7 +110,7 @@ function EditInfo({ onClick, article }: EditInfoProps) {
             <TextField
               id="pages"
               label="Pages"
-              value={pages}
+              value={claim}
               onChange={(e) => setPages(e.target.value)}
             />
             <TextField id="claim" label="Claim" multiline maxRows={2} />
@@ -111,12 +118,14 @@ function EditInfo({ onClick, article }: EditInfoProps) {
               id="evidence"
               label="Evidence"
               placeholder="Result of Evidence"
+              value={evidence}
               onChange={(e) => setPages(e.target.value)}
             />
             <TextField
               id="research"
               label="Research"
               placeholder="Type of research"
+              value={research}
               onChange={(e) => setPages(e.target.value)}
             />
           </div>
