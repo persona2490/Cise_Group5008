@@ -3,6 +3,10 @@ import React, { useState, useEffect } from "react";
 import { CiSearch } from "react-icons/ci";
 import Search from "./Search";
 import AppBar from "../navigation/AppBar";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 type SearchResult = { [key: string]: string };
 function SearchPage() {
@@ -14,6 +18,12 @@ function SearchPage() {
   );
   const [searchHistory, setSearchHistory] = useState<string[]>([]);
   const [showSearchHistory, setShowSearchHistory] = useState(true);
+
+  const [age, setAge] = React.useState("");
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setAge(event.target.value);
+  };
 
   useEffect(() => {
     const storedHistory = localStorage.getItem("searchHistory");
@@ -131,6 +141,26 @@ function SearchPage() {
       <div className="content">
         <h1>Explore the world’s knowledge, cultures, and ideas</h1>
 
+        <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+          <FormControl sx={{ m: 1, minWidth: 160 }}>
+            <InputLabel id="demo-simple-select-autowidth-label">SE METHOD</InputLabel>
+            <Select
+              labelId="demo-simple-select-autowidth-label"
+              id="demo-simple-select-autowidth"
+              value={age}
+              onChange={handleChange}
+              autoWidth
+              label="Age"
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={"WaterFall"}>WaterFall Management</MenuItem>
+              <MenuItem value={"Agile"}>Agile Development</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
+
         <div className="search-bar">
           <input
             type="text"
@@ -194,8 +224,8 @@ function SearchPage() {
 
       <style jsx>{`
         .content {
-            padding-top: 90px; 
-          }
+          padding-top: 90px;
+        }
         h1 {
           font-family: "Times New Roman", Times, serif;
           text-align: center;
