@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
+import axios from "axios";
 import styles from "./Popout.module.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -22,7 +22,6 @@ interface EditInfoProps {
 }
 
 function EditInfo({ onClick, article }: EditInfoProps) {
-
   const [title, setTitle] = useState(article?.Title || "");
   const [author, setAuthor] = useState(article?.Authors || "");
   const [journalName, setJournalName] = useState(article?.Journal || "");
@@ -49,14 +48,14 @@ function EditInfo({ onClick, article }: EditInfoProps) {
       Authors: author,
       Journal: journalName,
       Year: parseInt(years),
-      Pages: pages, 
-      isPublished: true
+      Pages: pages,
+      isPublished: true,
     };
     console.log('Updating article with data:', updatedArticle);
     try {
       const response = await axios.put(`http://localhost:5000/api/${article._id}`, updatedArticle);
       onClick(event);
-      window.location.reload(); 
+      window.location.reload();
     } catch (error) {
       console.error("Error updating the article:", error);
     }
@@ -68,7 +67,7 @@ function EditInfo({ onClick, article }: EditInfoProps) {
         <Box
           component="form"
           sx={{
-            "& .MuiTextField-root": { m: 1, width: "25ch" },
+            "& .MuiTextField-root": { m: 1, width: "20ch" },
           }}
           noValidate
           autoComplete="off"
@@ -105,6 +104,19 @@ function EditInfo({ onClick, article }: EditInfoProps) {
               id="pages"
               label="Pages"
               value={pages}
+              onChange={(e) => setPages(e.target.value)}
+            />
+            <TextField id="claim" label="Claim" multiline maxRows={2} />
+            <TextField
+              id="evidence"
+              label="Evidence"
+              placeholder="Result of Evidence"
+              onChange={(e) => setPages(e.target.value)}
+            />
+            <TextField
+              id="research"
+              label="Research"
+              placeholder="Type of research"
               onChange={(e) => setPages(e.target.value)}
             />
           </div>
